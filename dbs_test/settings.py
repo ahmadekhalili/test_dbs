@@ -81,8 +81,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'benchmark_db',
-        'USER': 'testuser',
-        'PASSWORD': 'testpass',
+        'USER': 'a13431343',
+        'PASSWORD': 'postgres',
         'HOST': 'localhost',
         'PORT': '5431',
         'CONN_MAX_AGE': 600,  # Connection pooling
@@ -91,19 +91,23 @@ DATABASES = {
         }
     }
 }
-MONGODB_SETTINGS = {
-    'host': 'mongodb://localhost:27016/',
-    'db': 'benchmark_db',
-    'maxPoolSize': 100,
-    'minPoolSize': 10,
+# MongoDB Configuration
+MONGODB = {
+    'HOST': 'localhost',        # MongoDB host
+    'PORT': 27017,             # MongoDB port
+    'NAME': 'myproject_db',    # MongoDB database name
+    'USER': 'mongo_user',      # Optional: MongoDB username
+    'PASSWORD': 'mongo_pass',  # Optional: MongoDB password
 }
 
-# ElasticSearch settings
-ELASTICSEARCH_SETTINGS = {
-    'hosts': ['http://localhost:9200'],
-    'max_retries': 3,
-    'retry_on_timeout': True,
-    'pool_size': 10,
+# Elasticsearch Configuration
+ELASTICSEARCH = {
+    'HOST': 'localhost',           # Elasticsearch host
+    'PORT': 9200,                 # Elasticsearch port
+    'INDEX_NAME': 'products',     # Elasticsearch index name
+    'USER': 'elastic_user',       # Optional: Elasticsearch username
+    'PASSWORD': 'elastic_pass',   # Optional: Elasticsearch password
+    'USE_SSL': False,             # Optional: Use HTTPS
 }
 
 # Password validation
