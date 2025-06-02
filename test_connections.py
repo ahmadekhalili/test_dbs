@@ -3,7 +3,7 @@
 Test script to verify all database connections are working properly.
 Run this after starting Docker containers to ensure everything is set up correctly.
 """
-
+a = 22
 import os
 import sys
 import django

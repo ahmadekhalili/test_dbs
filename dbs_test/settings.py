@@ -95,7 +95,7 @@ DATABASES = {
 MONGODB = {
     'HOST': 'localhost',        # MongoDB host
     'PORT': 27016,             # MongoDB port
-    'NAME': 'myproject_db',    # MongoDB database name
+    'NAME': 'test_db',    # MongoDB database name
     #'USER': 'mongo_user',      # Optional: MongoDB username
     #'PASSWORD': 'mongo_pass',  # Optional: MongoDB password
 }

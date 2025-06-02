@@ -2,7 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.db import transaction, connection
-
+from django.conf import settings
 import time
 import random
 import logging
@@ -10,11 +10,13 @@ from decimal import Decimal
 
 from .models import Product
 from .serializers import ProductSerializer, BenchmarkResultSerializer
-from .connections import es_mapping, create_mongo_client, create_es_client
+from .connections import get_mongo_client, get_els_client
+
+from setup_tables import ProductMongo
 
 logger = logging.getLogger(__name__)
-mongo_client = create_mongo_client()
-es_client = create_es_client()
+mongo_collection = get_mongo_client()[settings.MONGODB['NAME']][ProductMongo._meta['collection']]
+es_client = get_els_client()
 
 
 class BenchmarkAPIView(APIView):
