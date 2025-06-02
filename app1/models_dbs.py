@@ -6,7 +6,7 @@ from elasticsearch.exceptions import RequestError
 import json
 from decimal import Decimal
 
-from settings import MONGODB, ELASTICSEARCH
+from django.conf import settings
 
 
 class ProductMongo(Document):
@@ -46,18 +46,18 @@ class ElasticsearchManager:
     def __init__(self):
         # Build Elasticsearch connection URL
         auth = None
-        if ELASTICSEARCH.get('USER') and ELASTICSEARCH.get('PASSWORD'):
-            auth = (ELASTICSEARCH['USER'], ELASTICSEARCH['PASSWORD'])
+        if settings.ELASTICSEARCH.get('USER') and settings.ELASTICSEARCH.get('PASSWORD'):
+            auth = (settings.ELASTICSEARCH['USER'], settings.ELASTICSEARCH['PASSWORD'])
 
-        scheme = 'https' if ELASTICSEARCH.get('USE_SSL', False) else 'http'
-        host = f"{scheme}://{ELASTICSEARCH['HOST']}:{ELASTICSEARCH['PORT']}"
+        scheme = 'https' if settings.ELASTICSEARCH.get('USE_SSL', False) else 'http'
+        host = f"{scheme}://{settings.ELASTICSEARCH['HOST']}:{settings.ELASTICSEARCH['PORT']}"
 
         self.es = Elasticsearch(
             [host],
             http_auth=auth,
-            verify_certs=ELASTICSEARCH.get('USE_SSL', False)
+            verify_certs=settings.ELASTICSEARCH.get('USE_SSL', False)
         )
-        self.index_name = ELASTICSEARCH['INDEX_NAME']
+        self.index_name = settings.ELASTICSEARCH['INDEX_NAME']
 
     def create_index(self):
         """Create Elasticsearch index with mapping"""
@@ -140,19 +140,19 @@ def setup_mongodb():
     """Setup MongoDB connection and create indexes"""
     try:
         # Build MongoDB URI
-        if MONGODB.get('USER') and MONGODB.get('PASSWORD'):
-            mongo_uri = f"mongodb://{MONGODB['USER']}:{MONGODB['PASSWORD']}@{MONGODB['HOST']}:{MONGODB['PORT']}/{MONGODB['NAME']}"
+        if settings.MONGODB.get('USER') and settings.MONGODB.get('PASSWORD'):
+            mongo_uri = f"mongodb://{settings.MONGODB['USER']}:{settings.MONGODB['PASSWORD']}@{settings.MONGODB['HOST']}:{settings.MONGODB['PORT']}/{settings.MONGODB['NAME']}"
         else:
-            mongo_uri = f"mongodb://{MONGODB['HOST']}:{MONGODB['PORT']}/{MONGODB['NAME']}"
+            mongo_uri = f"mongodb://{settings.MONGODB['HOST']}:{settings.MONGODB['PORT']}/{settings.MONGODB['NAME']}"
 
         # Connect to MongoDB
         mongoengine.connect(
-            db=MONGODB['NAME'],
+            db=settings.MONGODB['NAME'],
             host=mongo_uri,
             alias='default'
         )
 
-        print(f"Connected to MongoDB: {MONGODB['NAME']}")
+        print(f"Connected to MongoDB: {settings.MONGODB['NAME']}")
 
         # Create indexes (they will be created automatically when first document is saved)
         # But we can ensure they exist by calling ensure_indexes
@@ -179,7 +179,7 @@ def setup_elasticsearch():
 
         # Create index
         if es_manager.create_index():
-            print(f"Elasticsearch index '{ELASTICSEARCH['INDEX_NAME']}' is ready")
+            print(f"Elasticsearch index '{settings.ELASTICSEARCH['INDEX_NAME']}' is ready")
             return True, es_manager
         else:
             return False, None
@@ -220,7 +220,7 @@ def main():
     print("=" * 50)
 
     print("\n📊 MONGODB:")
-    print(f"   Database Name: {MONGODB['NAME']}")
+    print(f"   Database Name: {settings.MONGODB['NAME']}")
     print(f"   Collection (Table) Name: products")
     print("   Fields:")
     print("     - name (StringField, max_length=200)")
@@ -235,7 +235,7 @@ def main():
     print("     - (category, price) (compound index)")
 
     print("\n🔍 ELASTICSEARCH:")
-    print(f"   Index Name: {ELASTICSEARCH['INDEX_NAME']}")
+    print(f"   Index Name: {settings.ELASTICSEARCH['INDEX_NAME']}")
     print("   Fields (Mapping):")
     print("     - name (text, analyzed)")
     print("     - category (keyword, for exact match)")
