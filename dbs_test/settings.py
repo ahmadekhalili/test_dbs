@@ -80,9 +80,9 @@ WSGI_APPLICATION = 'dbs_test.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'benchmark_db',
-        'USER': 'a13431343',
-        'PASSWORD': 'postgres',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'a13431343',
         'HOST': 'localhost',
         'PORT': '5431',
         'CONN_MAX_AGE': 600,  # Connection pooling
@@ -94,10 +94,10 @@ DATABASES = {
 # MongoDB Configuration
 MONGODB = {
     'HOST': 'localhost',        # MongoDB host
-    'PORT': 27017,             # MongoDB port
+    'PORT': 27016,             # MongoDB port
     'NAME': 'myproject_db',    # MongoDB database name
-    'USER': 'mongo_user',      # Optional: MongoDB username
-    'PASSWORD': 'mongo_pass',  # Optional: MongoDB password
+    #'USER': 'mongo_user',      # Optional: MongoDB username
+    #'PASSWORD': 'mongo_pass',  # Optional: MongoDB password
 }
 
 # Elasticsearch Configuration
@@ -105,8 +105,8 @@ ELASTICSEARCH = {
     'HOST': 'localhost',           # Elasticsearch host
     'PORT': 9200,                 # Elasticsearch port
     'INDEX_NAME': 'products',     # Elasticsearch index name
-    'USER': 'elastic_user',       # Optional: Elasticsearch username
-    'PASSWORD': 'elastic_pass',   # Optional: Elasticsearch password
+    #'USER': 'elastic_user',       # Optional: Elasticsearch username
+    #'PASSWORD': 'elastic_pass',   # Optional: Elasticsearch password
     'USE_SSL': False,             # Optional: Use HTTPS
 }
 
