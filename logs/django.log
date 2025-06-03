@@ -1,0 +1,32 @@
+[2025-06-03 09:16:20] INFO [MainThread] Watching for file changes with StatReloader
+[2025-06-03 09:16:44] INFO [Thread-1 (process_request_thread)] "POST / HTTP/1.1" 200 12078
+[2025-06-03 09:17:34] INFO [MainThread] C:\backs\others\test_dbs\app1\methods.py changed, reloading.
+[2025-06-03 09:17:35] INFO [MainThread] Watching for file changes with StatReloader
+[2025-06-03 09:17:42] INFO [MainThread] C:\backs\others\test_dbs\app1\methods.py changed, reloading.
+[2025-06-03 09:17:42] INFO [MainThread] Watching for file changes with StatReloader
+[2025-06-03 09:17:54] INFO [Thread-1 (process_request_thread)] "POST / HTTP/1.1" 200 12081
+[2025-06-03 09:20:58] INFO [MainThread] C:\backs\others\test_dbs\app1\methods.py changed, reloading.
+[2025-06-03 09:20:59] INFO [MainThread] Watching for file changes with StatReloader
+[2025-06-03 09:21:38] INFO [MainThread] C:\backs\others\test_dbs\app1\database_operations.py changed, reloading.
+[2025-06-03 09:21:40] INFO [MainThread] Watching for file changes with StatReloader
+[2025-06-03 09:21:51] INFO [Thread-1 (process_request_thread)] "POST / HTTP/1.1" 200 12078
+[2025-06-03 09:22:23] INFO [MainThread] C:\backs\others\test_dbs\app1\views.py changed, reloading.
+[2025-06-03 09:22:24] INFO [MainThread] Watching for file changes with StatReloader
+[2025-06-03 09:26:12] INFO [MainThread] C:\backs\others\test_dbs\app1\methods.py changed, reloading.
+[2025-06-03 09:26:13] INFO [MainThread] Watching for file changes with StatReloader
+[2025-06-03 09:26:25] WARNING [Thread-1 (process_request_thread)] Method Not Allowed: /
+[2025-06-03 09:26:25] WARNING [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 405 10312
+[2025-06-03 09:26:33] INFO [Thread-1 (process_request_thread)] "POST / HTTP/1.1" 200 12075
+[2025-06-03 09:27:31] INFO [MainThread] C:\backs\others\test_dbs\app1\methods.py changed, reloading.
+[2025-06-03 09:27:32] INFO [MainThread] Watching for file changes with StatReloader
+[2025-06-03 09:27:41] INFO [MainThread] C:\backs\others\test_dbs\app1\methods.py changed, reloading.
+[2025-06-03 09:27:42] INFO [MainThread] Watching for file changes with StatReloader
+[2025-06-03 09:27:52] INFO [Thread-1 (process_request_thread)] "POST / HTTP/1.1" 200 12080
+[2025-06-03 09:28:26] INFO [MainThread] Watching for file changes with StatReloader
+[2025-06-03 09:28:44] INFO [MainThread] C:\backs\others\test_dbs\dbs_test\settings.py changed, reloading.
+[2025-06-03 09:28:45] INFO [MainThread] Watching for file changes with StatReloader
+[2025-06-03 09:28:45] WARNING [Thread-1 (process_request_thread)] Method Not Allowed: /
+[2025-06-03 09:28:45] WARNING [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 405 10312
+[2025-06-03 09:28:46] WARNING [Thread-1 (process_request_thread)] Method Not Allowed: /
+[2025-06-03 09:28:46] WARNING [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 405 10312
+[2025-06-03 09:28:54] INFO [Thread-1 (process_request_thread)] "POST / HTTP/1.1" 200 12081

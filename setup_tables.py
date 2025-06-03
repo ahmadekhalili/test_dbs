@@ -1,3 +1,5 @@
+# ==================== UPDATED SETUP_TABLES.PY WITH FULL-TEXT SEARCH ====================
+
 import django
 import os
 import sys
@@ -25,9 +27,11 @@ from decimal import Decimal
 
 from django.conf import settings
 
+logger = logging.getLogger('web')
+
 
 class ProductMongo(Document):
-    """MongoDB model using MongoEngine"""
+    """MongoDB model using MongoEngine with full-text search support"""
     name = StringField(max_length=200, required=True)
     category = StringField(max_length=100, required=True)
     price = DecimalField(min_value=0, precision=2, required=True)
@@ -41,6 +45,12 @@ class ProductMongo(Document):
             'category',  # Single field index on category
             'price',  # Single field index on price
             ('category', 'price'),  # Compound index
+            # Full-text search index
+            {
+                'fields': ['$name', '$description', '$category'],
+                'default_language': 'english',
+                'weights': {'name': 10, 'description': 5, 'category': 1}
+            }
         ]
     }
 
@@ -81,9 +91,7 @@ class ProductData:
 
 class ElasticsearchProductManager:
     """
-    Elasticsearch manager for Product operations with selective indexing.
-    Only 'category' and 'price' fields are indexed for fast search.
-    Other fields are stored but not indexed to save memory and improve write performance.
+    Enhanced Elasticsearch manager optimized for full-text search capabilities
     """
 
     def __init__(self, connection_config: Dict[str, Any]):
@@ -92,14 +100,6 @@ class ElasticsearchProductManager:
 
         Args:
             connection_config: Dictionary containing connection parameters
-            Example: {
-                'host': 'localhost',
-                'port': 9200,
-                'user': 'elastic',
-                'password': 'password',
-                'use_ssl': False,
-                'index_name': 'products'
-            }
         """
         self.logger = logging.getLogger(__name__)
         self._setup_connection(connection_config)
@@ -135,50 +135,62 @@ class ElasticsearchProductManager:
 
     def create_index(self) -> bool:
         """
-        Create Elasticsearch index with optimized mapping.
-        Only 'category' and 'price' fields are indexed for search.
-        Other fields are stored but not indexed to optimize performance.
-
-        Returns:
-            bool: True if successful, False otherwise
+        Create Elasticsearch index optimized for full-text search.
+        This mapping showcases Elasticsearch's full-text search power.
         """
         mapping = {
             "mappings": {
                 "properties": {
-                    # فیلدهای غیر قابل جستجو (فقط ذخیره می‌شوند)
+                    # Full-text searchable fields with advanced analysis
                     "name": {
                         "type": "text",
-                        "index": False,  # No indexing for faster writes
-                        "store": True  # Store for retrieval
+                        "analyzer": "product_name_analyzer",
+                        "search_analyzer": "product_search_analyzer",
+                        "fields": {
+                            "keyword": {
+                                "type": "keyword"
+                            },
+                            "suggest": {
+                                "type": "completion"
+                            }
+                        }
                     },
                     "description": {
                         "type": "text",
-                        "index": False,  # No indexing for faster writes
-                        "store": True  # Store for retrieval
+                        "analyzer": "product_description_analyzer",
+                        "search_analyzer": "product_search_analyzer",
+                        "term_vector": "with_positions_offsets",  # For highlighting
+                        "fields": {
+                            "raw": {
+                                "type": "keyword"
+                            }
+                        }
+                    },
+                    "category": {
+                        "type": "text",
+                        "analyzer": "keyword",
+                        "fields": {
+                            "keyword": {
+                                "type": "keyword"
+                            },
+                            "suggest": {
+                                "type": "completion"
+                            }
+                        }
+                    },
+
+                    # Numerical and exact-match fields
+                    "price": {
+                        "type": "double",
+                        "index": True
                     },
                     "stock": {
                         "type": "integer",
-                        "index": False,  # No indexing for faster writes
-                        "store": True  # Store for retrieval
+                        "index": True
                     },
                     "rating": {
                         "type": "float",
-                        "index": False,  # No indexing for faster writes
-                        "store": True  # Store for retrieval
-                    },
-
-                    # فیلدهای قابل جستجو (indexed برای جستجوی سریع)
-                    "category": {
-                        "type": "keyword",  # Exact match
-                        "index": True,  # Enable indexing for fast search
-                        "store": True,  # Also store for retrieval
-                        "eager_global_ordinals": True  # Optimize for aggregations
-                    },
-                    "price": {
-                        "type": "double",  # High precision for money
-                        "index": True,  # Enable indexing for range queries
-                        "store": True,  # Also store for retrieval
-                        "coerce": False  # Strict type checking
+                        "index": True
                     }
                 }
             },
@@ -187,19 +199,82 @@ class ElasticsearchProductManager:
                 "number_of_replicas": 0,
                 "index": {
                     "refresh_interval": "1s",
-                    "max_result_window": 50000,  # Allow deep pagination
-                    # بهینه‌سازی برای نوشتن سریع‌تر
-                    "translog": {
-                        "durability": "async",
-                        "flush_threshold_size": "512mb"
-                    }
+                    "max_result_window": 50000,
+                    # Optimize for search performance
+                    "codec": "best_compression",
+                    "max_regex_length": 1000
                 },
-                # تنظیمات تحلیل‌گر (اگرچه فعلاً استفاده نمی‌شود)
+                # Advanced analyzers for full-text search
                 "analysis": {
-                    "analyzer": {
-                        "product_analyzer": {
+                    "tokenizer": {
+                        "product_tokenizer": {
                             "type": "standard",
-                            "stopwords": "_none_"
+                            "max_token_length": 255
+                        }
+                    },
+                    "filter": {
+                        "product_stemmer": {
+                            "type": "stemmer",
+                            "language": "english"
+                        },
+                        "product_stop": {
+                            "type": "stop",
+                            "stopwords": ["the", "is", "at", "which", "on"]
+                        },
+                        "product_synonym": {
+                            "type": "synonym",
+                            "synonyms": [
+                                "smartphone,mobile,phone",
+                                "laptop,computer,pc",
+                                "tv,television",
+                                "book,novel,guide"
+                            ]
+                        },
+                        "product_lowercase": {
+                            "type": "lowercase"
+                        },
+                        "product_edge_ngram": {
+                            "type": "edge_ngram",
+                            "min_gram": 2,
+                            "max_gram": 10
+                        }
+                    },
+                    "analyzer": {
+                        "product_name_analyzer": {
+                            "type": "custom",
+                            "tokenizer": "product_tokenizer",
+                            "filter": [
+                                "product_lowercase",
+                                "product_synonym",
+                                "product_stemmer"
+                            ]
+                        },
+                        "product_description_analyzer": {
+                            "type": "custom",
+                            "tokenizer": "standard",
+                            "filter": [
+                                "product_lowercase",
+                                "product_stop",
+                                "product_synonym",
+                                "product_stemmer"
+                            ]
+                        },
+                        "product_search_analyzer": {
+                            "type": "custom",
+                            "tokenizer": "standard",
+                            "filter": [
+                                "product_lowercase",
+                                "product_synonym",
+                                "product_stemmer"
+                            ]
+                        },
+                        "autocomplete_analyzer": {
+                            "type": "custom",
+                            "tokenizer": "keyword",
+                            "filter": [
+                                "product_lowercase",
+                                "product_edge_ngram"
+                            ]
                         }
                     }
                 }
@@ -217,6 +292,12 @@ class ElasticsearchProductManager:
             )
 
             self.logger.info(f"Successfully created index: {self.index_name}")
+            self.logger.info("Index optimized for full-text search with:")
+            self.logger.info("- Custom analyzers for name and description")
+            self.logger.info("- Synonym support")
+            self.logger.info("- Stemming and stop word filtering")
+            self.logger.info("- Edge n-gram for autocomplete")
+            self.logger.info("- Completion suggester support")
             return True
 
         except RequestError as e:
@@ -226,35 +307,9 @@ class ElasticsearchProductManager:
             self.logger.error(f"Unexpected error creating index: {e}")
             return False
 
-    def add_product(self, product: ProductData, product_id: Optional[str] = None) -> bool:
-        """
-        Add a product to the index
-
-        Args:
-            product: ProductData instance
-            product_id: Optional custom ID, if None Elasticsearch will generate one
-
-        Returns:
-            bool: True if successful, False otherwise
-        """
-        try:
-            response = self.es.index(
-                index=self.index_name,
-                id=product_id,
-                body=product.to_dict(),
-                refresh='wait_for'  # Ensure immediate availability for search
-            )
-
-            self.logger.info(f"Successfully indexed product: {response['_id']}")
-            return True
-
-        except Exception as e:
-            self.logger.error(f"Error indexing product: {e}")
-            return False
-
 
 def setup_mongodb():
-    """Setup MongoDB connection and create indexes"""
+    """Setup MongoDB connection and create indexes including full-text search"""
     print("📦 Setting up MongoDB...")
     try:
         # Build MongoDB URI
@@ -272,10 +327,13 @@ def setup_mongodb():
 
         print(f"✅ Connected to MongoDB: {settings.MONGODB['NAME']}")
 
-        # Create indexes (they will be created automatically when first document is saved)
-        # But we can ensure they exist by calling ensure_indexes
+        # Create indexes including full-text search
         ProductMongo.ensure_indexes()
         print("✅ MongoDB indexes created for ProductMongo collection: products")
+        print("   - Category index")
+        print("   - Price index")
+        print("   - Compound index (category, price)")
+        print("   - Full-text search index (name, description, category)")
 
         return True
     except Exception as e:
@@ -284,7 +342,7 @@ def setup_mongodb():
 
 
 def setup_elasticsearch():
-    """Setup Elasticsearch and create index"""
+    """Setup Elasticsearch and create index optimized for full-text search"""
     print("\n🔍 Setting up Elasticsearch...")
     try:
         # Create configuration from settings
@@ -311,9 +369,17 @@ def setup_elasticsearch():
 
         print("✅ Connected to Elasticsearch")
 
-        # Create index
+        # Create index with full-text search optimization
         if es_manager.create_index():
             print(f"✅ Elasticsearch index '{settings.ELASTICSEARCH['INDEX_NAME']}' is ready")
+            print("   🚀 Optimized for full-text search with:")
+            print("      - Custom analyzers (name, description, search)")
+            print("      - Synonym support (smartphone=mobile=phone)")
+            print("      - Stemming (running→run, products→product)")
+            print("      - Stop word filtering")
+            print("      - Edge n-gram for autocomplete")
+            print("      - Completion suggester")
+            print("      - Term vectors for highlighting")
             return True, es_manager
         else:
             return False, None
@@ -323,24 +389,99 @@ def setup_elasticsearch():
         return False, None
 
 
+def setup_postgresql_fulltext():
+    """Setup PostgreSQL full-text search extensions"""
+    print("\n🐘 Setting up PostgreSQL full-text search...")
+    try:
+        from django.db import connection
+
+        with connection.cursor() as cursor:
+            # Enable PostgreSQL full-text search extensions
+            try:
+                cursor.execute("CREATE EXTENSION IF NOT EXISTS pg_trgm;")
+                print("✅ pg_trgm extension enabled (for similarity search)")
+            except:
+                print("⚠️  pg_trgm extension not available (optional)")
+
+            try:
+                cursor.execute("CREATE EXTENSION IF NOT EXISTS unaccent;")
+                print("✅ unaccent extension enabled (for accent-insensitive search)")
+            except:
+                print("⚠️  unaccent extension not available (optional)")
+
+            # Create GIN indexes for full-text search
+            try:
+                cursor.execute("""
+                    CREATE INDEX IF NOT EXISTS products_fulltext_gin_idx 
+                    ON products 
+                    USING GIN (to_tsvector('english', name || ' ' || description || ' ' || category));
+                """)
+                print("✅ GIN full-text search index created")
+            except Exception as e:
+                print(f"⚠️  Could not create GIN index: {e}")
+
+            # Create trigram indexes for similarity search
+            try:
+                cursor.execute("""
+                    CREATE INDEX IF NOT EXISTS products_name_trgm_idx 
+                    ON products 
+                    USING GIN (name gin_trgm_ops);
+                """)
+                cursor.execute("""
+                    CREATE INDEX IF NOT EXISTS products_description_trgm_idx 
+                    ON products 
+                    USING GIN (description gin_trgm_ops);
+                """)
+                print("✅ Trigram indexes created for similarity search")
+            except Exception as e:
+                print(f"⚠️  Could not create trigram indexes: {e}")
+
+        print("✅ PostgreSQL full-text search setup completed")
+        return True
+
+    except Exception as e:
+        print(f"❌ Error setting up PostgreSQL full-text search: {e}")
+        return False
+
+
 def create_sample_product_example():
-    """Example of how to create a product (not executed automatically)"""
-    # This is just an example - not executed by default
-    example_product = ProductMongo(
-        name='Example Product',
-        category='Example Category',
-        price=Decimal('99.99'),
-        stock=10,
-        description='This is an example product',
-        rating=4.0
-    )
-    # To save: example_product.save()
-    return example_product
+    """Example of how to create a product optimized for full-text search testing"""
+    example_products = [
+        {
+            'name': 'Premium Wireless Smartphone Pro Max',
+            'category': 'Electronics',
+            'price': Decimal('899.99'),
+            'stock': 50,
+            'description': 'High-quality premium smartphone with advanced camera technology, long-lasting battery life, and wireless charging capabilities. Perfect for professional photography and mobile gaming.',
+            'rating': 4.8
+        },
+        {
+            'name': 'Professional Programming Guide Book',
+            'category': 'Books',
+            'price': Decimal('49.99'),
+            'stock': 100,
+            'description': 'Comprehensive programming guide for software developers. Covers advanced algorithms, data structures, and best practices for modern software development.',
+            'rating': 4.5
+        },
+        {
+            'name': 'Ultra Gaming Laptop Computer',
+            'category': 'Electronics',
+            'price': Decimal('1299.99'),
+            'stock': 25,
+            'description': 'Powerful gaming laptop with high-performance graphics card, fast processor, and premium display. Ideal for gaming, video editing, and professional work.',
+            'rating': 4.7
+        }
+    ]
+
+    return example_products
 
 
 def main():
-    """Main function to setup databases (initialization only)"""
-    print("=== Initializing MongoDB and Elasticsearch ===\n")
+    """Main function to setup databases with full-text search capabilities"""
+    print("=== Initializing Databases with Full-Text Search Support ===\n")
+
+    # Setup PostgreSQL full-text search
+    postgres_ft_success = setup_postgresql_fulltext()
 
     # Setup MongoDB
     mongo_success = setup_mongodb()
@@ -349,14 +490,28 @@ def main():
     es_success, es_manager = setup_elasticsearch()
 
     # Summary
-    print("\n=== Setup Summary ===")
-    print(f"MongoDB: {'✅ Success' if mongo_success else '❌ Failed'}")
-    print(f"Elasticsearch: {'✅ Success' if es_success else '❌ Failed'}")
+    print("\n" + "=" * 60)
+    print("🎯 FULL-TEXT SEARCH SETUP SUMMARY")
+    print("=" * 60)
+    print(f"PostgreSQL FT: {'✅ Ready' if postgres_ft_success else '❌ Failed'}")
+    print(f"MongoDB FT:    {'✅ Ready' if mongo_success else '❌ Failed'}")
+    print(f"Elasticsearch: {'✅ Ready' if es_success else '❌ Failed'}")
 
-    if mongo_success and es_success:
-        print("\n🎉 All databases initialized successfully!")
+    if postgres_ft_success and mongo_success and es_success:
+        print("\n🚀 ALL DATABASES READY FOR FULL-TEXT SEARCH BENCHMARKING!")
+        print("\n📊 Expected Performance Rankings for Full-Text Search:")
+        print("   🥇 1st: Elasticsearch (Optimized for search)")
+        print("   🥈 2nd: MongoDB (Good text indexing)")
+        print("   🥉 3rd: PostgreSQL (Basic full-text features)")
+
+        print("\n🧪 Test with these query examples:")
+        print('   - tests: ["full_text_search_simple"]')
+        print('   - tests: ["full_text_search_complex"]')
+        print('   - tests: ["write", "full_text_search_simple", "full_text_search_complex"]')
+
     else:
         print("\n⚠️  Some databases failed to initialize. Check the errors above.")
+        print("💡 Full-text search benchmarking may not work properly.")
 
 
 if __name__ == "__main__":

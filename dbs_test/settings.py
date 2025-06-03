@@ -11,7 +11,9 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
+from app1.database_operations import ElasticBenchmarkStrategy, MongoBenchmarkStrategy, PostgresBenchmarkStrategy
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -77,10 +79,110 @@ WSGI_APPLICATION = 'dbs_test.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '[%(asctime)s] %(levelname)s [%(threadName)s] %(message)s',
+            'datefmt': '%Y-%m-%d %H:%M:%S',
+        },
+        'indented': {  # additional space in first ('  ')
+            'format': '  [%(asctime)s] %(levelname)s [%(threadName)s] %(message)s',  # [%(name)s:%(lineno)s]
+            'datefmt': '%Y-%m-%d %H:%M:%S',
+        },
+        'card_separation': {
+            'format': '%(message)s',
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s',
+        },
+    },
+    'handlers': {
+        # Handler for Django/system logs
+        'django_file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs', 'django.log'),
+            'formatter': 'verbose',
+            'encoding': 'utf-8',
+        },
+        # Handler for web logs (you decide when to log)
+        'web_file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs', 'web.log'),
+            'formatter': 'verbose',
+            'encoding': 'utf-8',
+        },
+        'web_file_separation': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs', 'web.log'),
+            'formatter': 'card_separation',
+            'encoding': 'utf-8',
+        },
+        'file_file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs', 'web.log'),
+            'formatter': 'indented',
+            'encoding': 'utf-8',
+        },
+        'driver_handler': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs', 'driver.log'),
+            'formatter': 'verbose',
+            'encoding': 'utf-8',
+        },
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+            'level': 'INFO',
+        },
+        'console_file': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'indented',
+            'level': 'INFO',
+        },
+    },
+    'loggers': {
+        # Logger for Django/system logs (internal and framework-level)
+        'django': {
+            'handlers': ['django_file', 'console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        # Logger for web logging: use this when you explicitly call logging.getLogger('web')
+        'web': {
+            'handlers': ['web_file', 'console'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+        'web_separation': {   # show separation of cards (like "----------') without any prestring
+            'handlers': ['web_file_separation', 'console'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+        'file': {     # show logs when crawl inside a file (shows with additional '  ' space)
+            'handlers': ['file_file', 'console_file'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+        'driver': {  # show logs only for driver controlling (unctrolable in multi thread logs)
+            'handlers': ['driver_handler', 'console'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+    },
+}
+
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
+        'NAME': 'akh_db',
         'USER': 'postgres',
         'PASSWORD': 'a13431343',
         'HOST': 'localhost',
@@ -157,3 +259,8 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# after change restart manually!
+OPERATIONS_COUNT = {'write': 1000, 'read': 100, 'aggregate': 1000}   # do it in all dbs. example: do read for 100 records
+DATABASES_TO_TEST = {'Elastic': ElasticBenchmarkStrategy, 'Mongo': MongoBenchmarkStrategy, 'Postgres': PostgresBenchmarkStrategy}
+REFRESH = True          # clear database after each test or not
