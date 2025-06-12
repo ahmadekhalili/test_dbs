@@ -3,6 +3,7 @@ from typing import List, Tuple, Callable  # این import وجود ندارد
 from functools import partial
 import random
 import logging
+import copy
 
 from setup_tables import ProductMongo
 from .database_operations import ElasticBenchmarkStrategy, MongoBenchmarkStrategy, PostgresBenchmarkStrategy
@@ -83,6 +84,7 @@ def generate_realistic_test_data(count):
 class BenchmarkOperationBuilder:
 
     def generate_argument_for_operations(self, methods):  # required call before build_operations
+        methods = methods.copy()     # required (for .pop)
         argument_for_methods = {}
         if methods.get('write'):
             write_count = methods.pop('write')
@@ -91,13 +93,11 @@ class BenchmarkOperationBuilder:
         for method_name, count in methods.items():  # other operations are only count (int)
             argument_for_methods[method_name] = [count]
         self.argument_for_methods = argument_for_methods
-        logger.info(f'self.argument_for_methods: {self.argument_for_methods}')
         return self
 
     def build_operations(self) -> List[Tuple[str, str, Callable]]:
         """Build operations based on specified tests including full-text search"""
         operations = []
-
         for db_name, Database in settings.DATABASES_TO_TEST.items():
             if db_name == "Elastic":
                 db_ob = Database(client=es_client)
@@ -105,13 +105,10 @@ class BenchmarkOperationBuilder:
                 db_ob = Database(client=mongo_collection)
 
             for method_name, count in settings.OPERATIONS_COUNT.items():
-                logger.info(f"method_name: {method_name}, settings.OPERATIONS_COUNT.items(): {settings.OPERATIONS_COUNT.items()} {settings.OPERATIONS_COUNT}")
                 method = getattr(db_ob, method_name, None)
-
                 if method:
                     args = self.argument_for_methods.get(method_name, None)
-                    func = partial(method, *args) if args else method
-                    #logger.info(f"func: {method}, args: {args}")
+                    func = partial(method, *[copy.deepcopy(arg) for arg in args]) if args else method  # deep copy required, data could changes!
                     operations.append((db_name, method_name, count, func))
 
         return operations

@@ -13,6 +13,8 @@ original_level = es_logger.level
 es_logger.setLevel(logging.WARNING)
 logging.getLogger('pymongo').setLevel(logging.WARNING)
 
+
+# separated here from methods.py because of circular imports from settings.py
 class BenchmarkStrategy(ABC):
     """Enhanced Strategy interface with full-text search capabilities"""
     def __init__(self, client):  # 'client for circular import error
@@ -45,7 +47,7 @@ class PostgresBenchmarkStrategy(BenchmarkStrategy):
     """PostgreSQL implementation with full-text search using PostgreSQL's built-in capabilities"""
 
     def write(self, data):
-        logger.info(f'data: {data}')
+        logger.info(f'postgres write data: {data}')
         try:
             start_time = time.time()
             with transaction.atomic():
@@ -152,6 +154,7 @@ class MongoBenchmarkStrategy(BenchmarkStrategy):
     """MongoDB implementation with full-text search using MongoDB's text indexes"""
 
     def write(self, data):
+        logger.info(f'mongo write data: {data}')
         try:
             start_time = time.time()
             self.client.insert_many(data)
