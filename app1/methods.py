@@ -88,7 +88,7 @@ class BenchmarkOperationBuilder:
         argument_for_methods = {}
         if methods.get('write'):
             write_count = methods.pop('write')
-            arg1 = generate_test_data(count=write_count)  # is list
+            arg1 = generate_realistic_test_data(count=write_count)  # is list
             argument_for_methods['write'] = [arg1]
         for method_name, count in methods.items():  # other operations are only count (int)
             argument_for_methods[method_name] = [count]

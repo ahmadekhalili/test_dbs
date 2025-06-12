@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Benchmark Results</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+        
+        .controls {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+        
+        .btn:hover {
+            background: #0056b3;
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+        }
+        
+        .btn-secondary:hover {
+            background: #545b62;
+        }
+        
+        .table-container {
+            padding: 30px;
+            overflow-x: auto;
+        }
+        
+        .benchmark-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        
+        .benchmark-table thead {
+            background: linear-gradient(135deg, #495057 0%, #343a40 100%);
+            color: white;
+        }
+        
+        .benchmark-table th {
+            padding: 15px 12px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .benchmark-table tbody tr {
+            transition: background-color 0.2s;
+        }
+        
+        .benchmark-table tbody tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .benchmark-table tbody tr:hover {
+            background: #e3f2fd;
+            transform: scale(1.01);
+            transition: all 0.2s;
+        }
+        
+        .benchmark-table td {
+            padding: 12px;
+            border-bottom: 1px solid #e9ecef;
+            vertical-align: middle;
+        }
+        
+        .database-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .database-elastic {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .database-mongo {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .database-postgres {
+            background: #cce5ff;
+            color: #004085;
+        }
+        
+        .operation-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 500;
+            text-transform: capitalize;
+        }
+        
+        .operation-write {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .operation-read {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+        
+        .operation-aggregate {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .operation-fulltextsearchsimple,
+        .operation-fulltextsearchcomplex {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .time-cell {
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            color: #495057;
+        }
+        
+        .records-cell {
+            text-align: right;
+            color: #6c757d;
+        }
+        
+        .avg-time-cell {
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            color: #28a745;
+        }
+        
+        .no-data {
+            text-align: center;
+            padding: 60px;
+            color: #6c757d;
+        }
+        
+        .no-data h3 {
+            margin-bottom: 10px;
+            color: #495057;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 8px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .table-container {
+                padding: 15px;
+            }
+            
+            .benchmark-table th,
+            .benchmark-table td {
+                padding: 8px 6px;
+                font-size: 12px;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Database Benchmark Results</h1>
+            <p>Performance comparison across PostgreSQL, MongoDB, and Elasticsearch</p>
+        </div>
+        
+        <div class="controls">
+            <button class="btn" onclick="runBenchmark()">Run New Benchmark</button>
+            <button class="btn btn-secondary" onclick="location.reload()">Refresh Results</button>
+            <span style="margin-left: auto; color: #666;">
+                Total Operations: <strong>{{ results|length }}</strong>
+            </span>
+        </div>
+        
+        <div class="table-container">
+            {% if results %}
+                <table class="benchmark-table">
+                    <thead>
+                        <tr>
+                            <th>Database</th>
+                            <th>Operation</th>
+                            <th>Total Time (s)</th>
+                            <th>Records Processed</th>
+                            <th>Avg Time/Record (s)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for result in results %}
+                        <tr>
+                            <td>
+                                <span class="database-badge database-{{ result.database|lower }}">
+                                    {{ result.database }}
+                                </span>
+                            </td>
+                            <td>
+                                <span class="operation-badge operation-{{ result.operation|lower }}">
+                                    {{ result.operation }}
+                                </span>
+                            </td>
+                            <td class="time-cell">{{ result.total_time|floatformat:4 }}</td>
+                            <td class="records-cell">{{ result.records_processed|floatformat:0 }}</td>
+                            <td class="avg-time-cell">{{ result.avg_time_per_record|floatformat:8 }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div class="no-data">
+                    <h3>No Benchmark Results Available</h3>
+                    <p>Click "Run New Benchmark" to generate performance data</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <script>
+        async function runBenchmark() {
+            const btn = document.querySelector('.btn');
+            const originalText = btn.textContent;
+            btn.textContent = 'Running Benchmark...';
+            btn.disabled = true;
+            
+            try {
+                const response = await fetch('/api/benchmark/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    body: JSON.stringify({
+                        'record_count': 1000,
+                        'query_count': 100
+                    })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    // Store results and reload page to show them
+                    sessionStorage.setItem('benchmarkResults', JSON.stringify(data));
+                    location.reload();
+                } else {
+                    alert('Benchmark failed. Please check the console for details.');
+                    console.error('Benchmark failed:', await response.text());
+                }
+            } catch (error) {
+                alert('Error running benchmark: ' + error.message);
+                console.error('Error:', error);
+            } finally {
+                btn.textContent = originalText;
+                btn.disabled = false;
+            }
+        }
+        
+        // Load results from session storage if available
+        window.addEventListener('load', () => {
+            const storedResults = sessionStorage.getItem('benchmarkResults');
+            if (storedResults && !{{ results|length }}) {
+                const data = JSON.parse(storedResults);
+                // This would need server-side handling to display stored results
+                // For now, we'll just clear the storage after use
+                sessionStorage.removeItem('benchmarkResults');
+            }
+        });
+    </script>
+</body>
+</html>

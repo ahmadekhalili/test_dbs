@@ -5,6 +5,10 @@ from django.db import transaction, connection
 from django.conf import settings
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import render
+from django.http import JsonResponse
+from rest_framework.test import APIRequestFactory
+
 import time
 import random
 import logging
@@ -69,7 +73,7 @@ class BenchmarkAPIView(APIView):
         except Exception as e:
             logger.error(f"Failed to clear data: {e}")
 
-    def post(self, request):
+    def get(self, request):
         """Run benchmark tests with comprehensive error handling"""
         # Connection check
         connection_errors = self.check_database_connections()
@@ -118,3 +122,25 @@ class BenchmarkAPIView(APIView):
             response_data['warnings'] = errors
 
         return Response(response_data, status=status.HTTP_200_OK)
+
+
+def benchmark_results_view(request):
+    """Render the benchmark results table view"""
+    # Results will be shown after running benchmark via API
+    factory = APIRequestFactory()
+    get_request = factory.get('/fake-path/')  # URL can be dummy
+    # Pass through the authenticated user if needed
+    get_request.user = request.user
+
+    # Call the view's GET method using DRF's `as_view`
+    # This will invoke the same lifecycle as an external HTTP GET
+    response = BenchmarkAPIView().get(get_request).data
+    dbs_benchmarks = response.get('results')
+    if dbs_benchmarks:
+        logger.info(f"response received, dbs results: {len(response['results'])}")
+        return render(request, 'app1/benchmark_results.html', {'results': dbs_benchmarks})
+    else:
+        logger.error(f"no result from api response. response: {response}")
+        return render(request, 'app1/benchmark_results.html', {
+            'results': []
+        })

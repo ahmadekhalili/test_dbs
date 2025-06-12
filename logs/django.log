@@ -151,3 +151,72 @@ TypeError: 'str' object is not callable
 [2025-06-12 16:20:09] INFO [MainThread] C:\backs\others\test_dbs\dbs_test\settings.py changed, reloading.
 [2025-06-12 16:20:11] INFO [MainThread] Watching for file changes with StatReloader
 [2025-06-12 16:20:23] INFO [Thread-1 (process_request_thread)] "POST / HTTP/1.1" 200 12978
+[2025-06-12 16:42:57] INFO [MainThread] C:\backs\others\test_dbs\app1\views.py changed, reloading.
+[2025-06-12 16:43:01] INFO [MainThread] Watching for file changes with StatReloader
+[2025-06-12 16:43:17] INFO [MainThread] C:\backs\others\test_dbs\app1\views.py changed, reloading.
+[2025-06-12 16:43:19] INFO [MainThread] Watching for file changes with StatReloader
+[2025-06-12 16:43:42] INFO [MainThread] C:\backs\others\test_dbs\app1\urls.py changed, reloading.
+[2025-06-12 16:43:43] INFO [MainThread] Watching for file changes with StatReloader
+[2025-06-12 16:45:27] INFO [MainThread] C:\backs\others\test_dbs\app1\views.py changed, reloading.
+[2025-06-12 16:45:29] INFO [MainThread] Watching for file changes with StatReloader
+[2025-06-12 16:46:41] INFO [MainThread] C:\backs\others\test_dbs\app1\views.py changed, reloading.
+[2025-06-12 16:46:42] INFO [MainThread] Watching for file changes with StatReloader
+[2025-06-12 16:47:53] INFO [MainThread] C:\backs\others\test_dbs\app1\views.py changed, reloading.
+[2025-06-12 16:47:55] INFO [MainThread] Watching for file changes with StatReloader
+[2025-06-12 16:48:05] INFO [MainThread] C:\backs\others\test_dbs\app1\views.py changed, reloading.
+[2025-06-12 16:48:06] INFO [MainThread] Watching for file changes with StatReloader
+[2025-06-12 16:48:57] INFO [MainThread] C:\backs\others\test_dbs\app1\views.py changed, reloading.
+[2025-06-12 16:48:59] INFO [MainThread] Watching for file changes with StatReloader
+[2025-06-12 16:49:07] ERROR [Thread-1 (process_request_thread)] Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\skh\Envs\venv\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\skh\Envs\venv\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\backs\others\test_dbs\app1\views.py", line 137, in benchmark_results_view
+    response = BenchmarkAPIView.as_view({'get': 'get'})(get_request)
+TypeError: APIView.as_view() takes 1 positional argument but 2 were given
+[2025-06-12 16:49:07] ERROR [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 500 69300
+[2025-06-12 16:50:31] INFO [MainThread] C:\backs\others\test_dbs\app1\views.py changed, reloading.
+[2025-06-12 16:50:33] INFO [MainThread] Watching for file changes with StatReloader
+[2025-06-12 16:50:41] INFO [MainThread] C:\backs\others\test_dbs\app1\views.py changed, reloading.
+[2025-06-12 16:50:42] INFO [MainThread] Watching for file changes with StatReloader
+[2025-06-12 16:51:07] ERROR [Thread-1 (process_request_thread)] Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\skh\Envs\venv\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\skh\Envs\venv\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\backs\others\test_dbs\app1\views.py", line 138, in benchmark_results_view
+    logger.info(f"response received, dbs results: {len(response['results'])}")
+  File "C:\Users\skh\Envs\venv\lib\site-packages\django\http\response.py", line 200, in __getitem__
+    return self.headers[header]
+  File "C:\Users\skh\Envs\venv\lib\site-packages\django\utils\datastructures.py", line 308, in __getitem__
+    return self._store[key.lower()][1]
+KeyError: 'results'
+[2025-06-12 16:51:07] ERROR [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 500 76661
+[2025-06-12 16:52:20] INFO [MainThread] C:\backs\others\test_dbs\app1\views.py changed, reloading.
+[2025-06-12 16:52:22] INFO [MainThread] Watching for file changes with StatReloader
+[2025-06-12 16:52:46] INFO [MainThread] C:\backs\others\test_dbs\app1\views.py changed, reloading.
+[2025-06-12 16:52:47] INFO [MainThread] Watching for file changes with StatReloader
+[2025-06-12 16:53:05] INFO [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 200 8990
+[2025-06-12 16:53:44] INFO [MainThread] C:\backs\others\test_dbs\app1\views.py changed, reloading.
+[2025-06-12 16:53:46] INFO [MainThread] Watching for file changes with StatReloader
+[2025-06-12 16:54:09] ERROR [Thread-1 (process_request_thread)] Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\skh\Envs\venv\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\skh\Envs\venv\lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    self.check_response(response, callback)
+  File "C:\Users\skh\Envs\venv\lib\site-packages\django\core\handlers\base.py", line 332, in check_response
+    raise ValueError(
+ValueError: The view app1.views.benchmark_results_view didn't return an HttpResponse object. It returned None instead.
+[2025-06-12 16:54:09] ERROR [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 500 70126
+[2025-06-12 18:34:04] INFO [MainThread] C:\backs\others\test_dbs\app1\views.py changed, reloading.
+[2025-06-12 18:34:07] INFO [MainThread] Watching for file changes with StatReloader
+[2025-06-12 18:34:23] INFO [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 200 15957
+[2025-06-12 18:36:07] INFO [MainThread] C:\backs\others\test_dbs\app1\methods.py changed, reloading.
+[2025-06-12 18:36:09] INFO [MainThread] Watching for file changes with StatReloader
+[2025-06-12 18:36:23] INFO [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 200 15957
+[2025-06-12 18:36:47] INFO [MainThread] C:\backs\others\test_dbs\dbs_test\settings.py changed, reloading.
+[2025-06-12 18:36:49] INFO [MainThread] Watching for file changes with StatReloader
