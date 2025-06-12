@@ -4,7 +4,11 @@ import random
 import logging
 from typing import Dict, List, Tuple, Any, Callable
 from django.db.models import Q
+from django.db import transaction
 from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
+from decimal import Decimal
+
+from .models import Product
 
 logger = logging.getLogger('web')
 
@@ -47,7 +51,7 @@ class PostgresBenchmarkStrategy(BenchmarkStrategy):
     """PostgreSQL implementation with full-text search using PostgreSQL's built-in capabilities"""
 
     def write(self, data):
-        logger.info(f'postgres write data: {data}')
+        logger.info(f'postgres write data: {len(data)} records like: {data[:2]}')
         try:
             start_time = time.time()
             with transaction.atomic():
@@ -154,7 +158,7 @@ class MongoBenchmarkStrategy(BenchmarkStrategy):
     """MongoDB implementation with full-text search using MongoDB's text indexes"""
 
     def write(self, data):
-        logger.info(f'mongo write data: {data}')
+        logger.info(f'mongo write data: {len(data)} records like: {data[:2]}')
         try:
             start_time = time.time()
             self.client.insert_many(data)
@@ -274,11 +278,11 @@ class ElasticBenchmarkStrategy(BenchmarkStrategy):
             start_time = time.time()
 
             def generate_docs():
-                for i, item in enumerate(data):
-                    clean_doc = {k: (str(v) if hasattr(v, '__class__') and 'ObjectId' in str(type(v)) else v)
-                                 for k, v in item.items() if k != '_id'}
-                    yield {"_index": self.index_name, "_id": i, "_source": clean_doc}
+                import uuid
+                for item in data:
+                    yield {"_index": self.index_name, "_id": str(uuid.uuid4()), "_source": item}
 
+            logger.info(f"Elasticsearch write data: {len(data)} records like: {data[:2]}")
             try:
                 success_count, failed_docs = bulk(self.client, generate_docs(), refresh=True, raise_on_error=False)
             finally:

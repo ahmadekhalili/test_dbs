@@ -80,3 +80,74 @@
 [2025-06-12 11:46:09] INFO [Thread-1 (process_request_thread)] "POST / HTTP/1.1" 200 12076
 [2025-06-12 11:49:40] INFO [MainThread] C:\backs\others\test_dbs\dbs_test\settings.py changed, reloading.
 [2025-06-12 11:49:43] INFO [MainThread] Watching for file changes with StatReloader
+[2025-06-12 11:50:05] INFO [Thread-1 (process_request_thread)] "POST / HTTP/1.1" 200 12983
+[2025-06-12 11:55:33] WARNING [Thread-2 (process_request_thread)] Method Not Allowed: /
+[2025-06-12 11:55:33] WARNING [Thread-2 (process_request_thread)] "GET / HTTP/1.1" 405 10312
+[2025-06-12 11:55:36] WARNING [Thread-2 (process_request_thread)] Not Found: /test/
+[2025-06-12 11:55:36] WARNING [Thread-2 (process_request_thread)] "GET /test/ HTTP/1.1" 404 2612
+[2025-06-12 12:09:13] INFO [Thread-3 (process_request_thread)] "POST / HTTP/1.1" 200 12982
+[2025-06-12 12:39:37] INFO [MainThread] C:\backs\others\test_dbs\app1\database_operations.py changed, reloading.
+[2025-06-12 12:39:39] INFO [MainThread] Watching for file changes with StatReloader
+[2025-06-12 12:40:09] INFO [MainThread] C:\backs\others\test_dbs\app1\database_operations.py changed, reloading.
+[2025-06-12 15:38:26] INFO [MainThread] Watching for file changes with StatReloader
+[2025-06-12 15:41:58] WARNING [Thread-1 (process_request_thread)] Method Not Allowed: /
+[2025-06-12 15:41:58] WARNING [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 405 10312
+[2025-06-12 15:42:01] ERROR [Thread-2 (process_request_thread)] Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\skh\Envs\venv\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\skh\Envs\venv\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\skh\Envs\venv\lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\skh\Envs\venv\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\skh\Envs\venv\lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\skh\Envs\venv\lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\skh\Envs\venv\lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\skh\Envs\venv\lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\skh\Envs\venv\lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\skh\Envs\venv\lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "C:\backs\others\test_dbs\app1\views.py", line 88, in post
+    benchmark_operations = operation_builder.generate_argument_for_operations(settings.OPERATIONS_COUNT).build_operations()
+  File "C:\backs\others\test_dbs\app1\methods.py", line 103, in build_operations
+    db_ob = Database(client=es_client)
+TypeError: 'str' object is not callable
+[2025-06-12 15:42:01] ERROR [Thread-2 (process_request_thread)] "POST / HTTP/1.1" 500 108977
+[2025-06-12 15:45:06] INFO [MainThread] C:\backs\others\test_dbs\app1\methods.py changed, reloading.
+[2025-06-12 15:45:08] INFO [MainThread] Watching for file changes with StatReloader
+[2025-06-12 15:49:35] INFO [MainThread] C:\backs\others\test_dbs\app1\methods.py changed, reloading.
+[2025-06-12 15:49:37] INFO [MainThread] Watching for file changes with StatReloader
+[2025-06-12 15:51:07] INFO [MainThread] C:\backs\others\test_dbs\app1\methods.py changed, reloading.
+[2025-06-12 15:51:08] INFO [MainThread] Watching for file changes with StatReloader
+[2025-06-12 15:51:38] INFO [MainThread] C:\backs\others\test_dbs\app1\methods.py changed, reloading.
+[2025-06-12 15:51:39] INFO [MainThread] Watching for file changes with StatReloader
+[2025-06-12 15:52:14] INFO [MainThread] Watching for file changes with StatReloader
+[2025-06-12 15:52:21] WARNING [Thread-1 (process_request_thread)] Method Not Allowed: /
+[2025-06-12 15:52:21] WARNING [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 405 10312
+[2025-06-12 15:52:32] INFO [Thread-1 (process_request_thread)] "POST / HTTP/1.1" 200 12981
+[2025-06-12 15:56:56] INFO [MainThread] C:\backs\others\test_dbs\dbs_test\settings.py changed, reloading.
+[2025-06-12 15:56:57] INFO [MainThread] Watching for file changes with StatReloader
+[2025-06-12 15:57:11] INFO [Thread-1 (process_request_thread)] "POST / HTTP/1.1" 200 12978
+[2025-06-12 15:57:20] INFO [MainThread] C:\backs\others\test_dbs\dbs_test\settings.py changed, reloading.
+[2025-06-12 15:57:22] INFO [MainThread] Watching for file changes with StatReloader
+[2025-06-12 15:57:36] INFO [Thread-1 (process_request_thread)] "POST / HTTP/1.1" 200 12076
+[2025-06-12 15:57:45] INFO [Thread-1 (process_request_thread)] "POST / HTTP/1.1" 200 12078
+[2025-06-12 16:03:34] INFO [MainThread] C:\backs\others\test_dbs\dbs_test\settings.py changed, reloading.
+[2025-06-12 16:03:36] INFO [MainThread] Watching for file changes with StatReloader
+[2025-06-12 16:12:20] INFO [Thread-1 (process_request_thread)] "POST / HTTP/1.1" 200 14220
+[2025-06-12 16:16:00] INFO [MainThread] C:\backs\others\test_dbs\app1\database_operations.py changed, reloading.
+[2025-06-12 16:16:03] INFO [MainThread] Watching for file changes with StatReloader
+[2025-06-12 16:17:38] INFO [Thread-1 (process_request_thread)] "POST / HTTP/1.1" 200 12985
+[2025-06-12 16:18:31] INFO [Thread-2 (process_request_thread)] "GET /admin/web/report/ HTTP/1.1" 302 0
+[2025-06-12 16:18:31] INFO [Thread-2 (process_request_thread)] "GET /admin/login/?next=/admin/web/report/ HTTP/1.1" 200 4195
+[2025-06-12 16:18:31] INFO [Thread-2 (process_request_thread)] "GET /static/admin/css/login.css HTTP/1.1" 200 951
+[2025-06-12 16:20:09] INFO [MainThread] C:\backs\others\test_dbs\dbs_test\settings.py changed, reloading.
+[2025-06-12 16:20:11] INFO [MainThread] Watching for file changes with StatReloader
+[2025-06-12 16:20:23] INFO [Thread-1 (process_request_thread)] "POST / HTTP/1.1" 200 12978

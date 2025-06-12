@@ -12,8 +12,6 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import os
-
-from app1.database_operations import ElasticBenchmarkStrategy, MongoBenchmarkStrategy, PostgresBenchmarkStrategy
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -262,5 +260,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # after change restart manually!
 OPERATIONS_COUNT = {'write': 1000, 'read': 100, 'aggregate': 1000}   # do it in all dbs. example: do read for 100 records
-DATABASES_TO_TEST = {'Elastic': ElasticBenchmarkStrategy, 'Mongo': MongoBenchmarkStrategy, 'Postgres': PostgresBenchmarkStrategy}
+DATABASES_TO_TEST = {'Elastic': 'ElasticBenchmarkStrategy', 'Mongo': 'MongoBenchmarkStrategy', 'Postgres': 'PostgresBenchmarkStrategy'}
 REFRESH = False          # clear database after each test or not

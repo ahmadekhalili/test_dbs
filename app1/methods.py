@@ -4,9 +4,9 @@ from functools import partial
 import random
 import logging
 import copy
+import importlib
 
 from setup_tables import ProductMongo
-from .database_operations import ElasticBenchmarkStrategy, MongoBenchmarkStrategy, PostgresBenchmarkStrategy
 from .connections import get_mongo_client, get_els_client
 
 logger = logging.getLogger('web')
@@ -98,18 +98,24 @@ class BenchmarkOperationBuilder:
     def build_operations(self) -> List[Tuple[str, str, Callable]]:
         """Build operations based on specified tests including full-text search"""
         operations = []
-        for db_name, Database in settings.DATABASES_TO_TEST.items():
+        
+        for db_name, class_name in settings.DATABASES_TO_TEST.items():
+            # Dynamically import the class from database_operations module
+            module = importlib.import_module('app1.database_operations')
+            Database = getattr(module, class_name)
+            
             if db_name == "Elastic":
                 db_ob = Database(client=es_client)
             elif db_name == "Mongo":
                 db_ob = Database(client=mongo_collection)
+            elif db_name == "Postgres":
+                db_ob = Database(client=None)  # PostgreSQL uses Django ORM, no client needed
 
             for method_name, count in settings.OPERATIONS_COUNT.items():
                 method = getattr(db_ob, method_name, None)
                 if method:
                     args = self.argument_for_methods.get(method_name, None)
-                    func = partial(method, *[copy.deepcopy(arg) for arg in args]) if args else method  # deep copy required, data could changes!
+                    func = partial(method, *[copy.deepcopy(arg) for arg in args]) if args else partial(method, count)
                     operations.append((db_name, method_name, count, func))
 
         return operations
-

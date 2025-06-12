@@ -5,10 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="857553d7-9172-413e-b1d9-bdc608daa565" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app1/database_operations.py" beforeDir="false" afterPath="$PROJECT_DIR$/app1/database_operations.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app1/methods.py" beforeDir="false" afterPath="$PROJECT_DIR$/app1/methods.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app1/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/app1/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dbs_test/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/dbs_test/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logs/django.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/django.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logs/web.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/web.log" afterDir="false" />
@@ -104,7 +103,7 @@
       <workItem from="1748943733188" duration="60000" />
       <workItem from="1749570078726" duration="1773000" />
       <workItem from="1749687738322" duration="1650000" />
-      <workItem from="1749715073282" duration="1899000" />
+      <workItem from="1749715073282" duration="7984000" />
     </task>
     <servers />
   </component>
