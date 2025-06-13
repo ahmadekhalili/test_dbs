@@ -41,3 +41,31 @@
 [2025-06-12 18:37:01] INFO [Thread-1 (process_request_thread)] Completed Elastic Write benchmark: 0.985s
 [2025-06-12 18:37:06] INFO [Thread-1 (process_request_thread)] Completed Elastic Read benchmark: 5.174s
 [2025-06-12 18:37:06] INFO [Thread-1 (process_request_thread)] Completed Elastic Aggregate benchmark: 0.080s
+[2025-06-12 18:38:00] INFO [Thread-1 (process_request_thread)] Completed Elastic FullTextSearchSimple benchmark: 53.632s
+[2025-06-12 18:38:00] INFO [Thread-1 (process_request_thread)] mongo write data: 1000 records like: [{'name': 'Product 0', 'category': 'Food', 'price': 512.97, 'stock': 8, 'description': 'This is a detailed description for product 0 in Food category. High quality and reliable.', 'rating': 1.9}, {'name': 'Winter Jacket 1', 'category': 'Clothing', 'price': 153.22, 'stock': 508, 'description': 'Warm winter jacket with weather protection and comfortable design. Product ID: 1. Detailed specifications and features included.', 'rating': 2.9}]
+[2025-06-12 18:38:00] INFO [Thread-1 (process_request_thread)] Completed Mongo Write benchmark: 0.200s
+[2025-06-12 18:38:02] INFO [Thread-1 (process_request_thread)] Completed Mongo Read benchmark: 2.154s
+[2025-06-12 18:38:02] INFO [Thread-1 (process_request_thread)] Completed Mongo Aggregate benchmark: 0.029s
+[2025-06-12 18:38:07] INFO [Thread-1 (process_request_thread)] Completed Mongo FullTextSearchSimple benchmark: 4.695s
+[2025-06-12 18:38:07] INFO [Thread-1 (process_request_thread)] postgres write data: 1000 records like: [{'name': 'Product 0', 'category': 'Food', 'price': 512.97, 'stock': 8, 'description': 'This is a detailed description for product 0 in Food category. High quality and reliable.', 'rating': 1.9}, {'name': 'Winter Jacket 1', 'category': 'Clothing', 'price': 153.22, 'stock': 508, 'description': 'Warm winter jacket with weather protection and comfortable design. Product ID: 1. Detailed specifications and features included.', 'rating': 2.9}]
+[2025-06-12 18:38:07] INFO [Thread-1 (process_request_thread)] Completed Postgres Write benchmark: 0.342s
+[2025-06-12 18:38:09] INFO [Thread-1 (process_request_thread)] Completed Postgres Read benchmark: 1.671s
+[2025-06-12 18:38:09] INFO [Thread-1 (process_request_thread)] Completed Postgres Aggregate benchmark: 0.008s
+[2025-06-12 18:38:18] INFO [Thread-1 (process_request_thread)] Completed Postgres FullTextSearchSimple benchmark: 8.959s
+[2025-06-12 18:38:18] INFO [Thread-1 (process_request_thread)] response received, dbs results: 12
+[2025-06-13 06:00:04] INFO [Thread-1 (process_request_thread)] Elasticsearch write data: 1000 records like: [{'name': 'Product 0', 'category': 'Food', 'price': 875.35, 'stock': 878, 'description': 'This is a detailed description for product 0 in Food category. High quality and reliable.', 'rating': 3.5}, {'name': 'Product 1', 'category': 'Sports', 'price': 92.21, 'stock': 404, 'description': 'This is a detailed description for product 1 in Sports category. High quality and reliable.', 'rating': 3.1}]
+[2025-06-13 06:00:07] INFO [Thread-1 (process_request_thread)] Completed Elastic Write benchmark: 2.898s
+[2025-06-13 06:00:13] INFO [Thread-1 (process_request_thread)] Completed Elastic Read benchmark: 6.912s
+[2025-06-13 06:00:14] INFO [Thread-1 (process_request_thread)] Completed Elastic Aggregate benchmark: 0.083s
+[2025-06-13 06:01:21] INFO [Thread-1 (process_request_thread)] Completed Elastic FullTextSearchComplex benchmark: 67.068s
+[2025-06-13 06:01:21] INFO [Thread-1 (process_request_thread)] mongo write data: 1000 records like: [{'name': 'Product 0', 'category': 'Food', 'price': 875.35, 'stock': 878, 'description': 'This is a detailed description for product 0 in Food category. High quality and reliable.', 'rating': 3.5}, {'name': 'Product 1', 'category': 'Sports', 'price': 92.21, 'stock': 404, 'description': 'This is a detailed description for product 1 in Sports category. High quality and reliable.', 'rating': 3.1}]
+[2025-06-13 06:01:21] INFO [Thread-1 (process_request_thread)] Completed Mongo Write benchmark: 0.264s
+[2025-06-13 06:01:24] INFO [Thread-1 (process_request_thread)] Completed Mongo Read benchmark: 2.865s
+[2025-06-13 06:01:24] INFO [Thread-1 (process_request_thread)] Completed Mongo Aggregate benchmark: 0.058s
+[2025-06-13 06:01:42] INFO [Thread-1 (process_request_thread)] Completed Mongo FullTextSearchComplex benchmark: 18.625s
+[2025-06-13 06:01:42] INFO [Thread-1 (process_request_thread)] postgres write data: 1000 records like: [{'name': 'Product 0', 'category': 'Food', 'price': 875.35, 'stock': 878, 'description': 'This is a detailed description for product 0 in Food category. High quality and reliable.', 'rating': 3.5}, {'name': 'Product 1', 'category': 'Sports', 'price': 92.21, 'stock': 404, 'description': 'This is a detailed description for product 1 in Sports category. High quality and reliable.', 'rating': 3.1}]
+[2025-06-13 06:01:43] INFO [Thread-1 (process_request_thread)] Completed Postgres Write benchmark: 0.305s
+[2025-06-13 06:01:45] INFO [Thread-1 (process_request_thread)] Completed Postgres Read benchmark: 2.054s
+[2025-06-13 06:01:45] INFO [Thread-1 (process_request_thread)] Completed Postgres Aggregate benchmark: 0.013s
+[2025-06-13 06:08:37] INFO [Thread-1 (process_request_thread)] Completed Postgres FullTextSearchComplex benchmark: 412.607s
+[2025-06-13 06:08:38] INFO [Thread-1 (process_request_thread)] response received, dbs results: 12

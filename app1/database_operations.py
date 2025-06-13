@@ -235,16 +235,6 @@ class MongoBenchmarkStrategy(BenchmarkStrategy):
             ]
             start_time = time.time()
 
-            # First, ensure text index exists (in production, this should be done during setup)
-            try:
-                self.client.create_index([
-                    ('name', 'text'),
-                    ('description', 'text'),
-                    ('category', 'text')
-                ])
-            except:
-                pass  # Index might already exist
-
             for _ in range(query_count):
                 query_text = random.choice(search_queries)
 
@@ -271,9 +261,6 @@ class ElasticBenchmarkStrategy(BenchmarkStrategy):
     def write(self, data):
         try:
             from elasticsearch.helpers import bulk
-            if not self.client.indices.exists(index=self.index_name):
-                # Create index with proper full-text search mapping
-                self._create_fulltext_index()
 
             start_time = time.time()
 
@@ -292,50 +279,6 @@ class ElasticBenchmarkStrategy(BenchmarkStrategy):
         except Exception as e:
             logger.error(f"Elasticsearch write benchmark failed: {e}")
             raise
-
-    def _create_fulltext_index(self):
-        """Create index optimized for full-text search"""
-        mapping = {
-            "mappings": {
-                "properties": {
-                    "name": {
-                        "type": "text",
-                        "analyzer": "standard",
-                        "fields": {
-                            "keyword": {"type": "keyword"}
-                        }
-                    },
-                    "description": {
-                        "type": "text",
-                        "analyzer": "standard"
-                    },
-                    "category": {
-                        "type": "text",
-                        "analyzer": "standard",
-                        "fields": {
-                            "keyword": {"type": "keyword"}
-                        }
-                    },
-                    "price": {"type": "double"},
-                    "stock": {"type": "integer"},
-                    "rating": {"type": "float"}
-                }
-            },
-            "settings": {
-                "number_of_shards": 1,
-                "number_of_replicas": 0,
-                "analysis": {
-                    "analyzer": {
-                        "custom_analyzer": {
-                            "type": "standard",
-                            "stopwords": "_none_"
-                        }
-                    }
-                }
-            }
-        }
-
-        self.client.indices.create(index=self.index_name, body=mapping)
 
     def read(self, query_count):
         try:

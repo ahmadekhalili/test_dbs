@@ -198,7 +198,7 @@ class ElasticsearchProductManager:
                 "number_of_shards": 1,
                 "number_of_replicas": 0,
                 "index": {
-                    "refresh_interval": "1s",
+                    "refresh_interval": "30s",
                     "max_result_window": 50000,
                     # Optimize for search performance
                     "codec": "best_compression",
