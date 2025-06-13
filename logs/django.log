@@ -226,3 +226,5 @@ ValueError: The view app1.views.benchmark_results_view didn't return an HttpResp
 [2025-06-13 05:59:37] INFO [MainThread] C:\backs\others\test_dbs\dbs_test\settings.py changed, reloading.
 [2025-06-13 05:59:40] INFO [MainThread] Watching for file changes with StatReloader
 [2025-06-13 06:08:38] INFO [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 200 18268
+[2025-06-13 09:55:15] INFO [MainThread] C:\backs\others\test_dbs\app1\database_operations.py changed, reloading.
+[2025-06-13 09:55:18] INFO [MainThread] Watching for file changes with StatReloader

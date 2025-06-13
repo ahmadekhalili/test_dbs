@@ -103,8 +103,8 @@ class PostgresBenchmarkStrategy(BenchmarkStrategy):
 
     def full_text_search_simple(self, query_count):
         """
-        Simple full-text search using PostgreSQL's LIKE and ILIKE operators
-        Searches in name and description fields
+        Simple full-text search using PostgreSQL's built-in text search (fair comparison)
+        Uses to_tsvector and plainto_tsquery for proper full-text search with GIN index
         """
         try:
             search_terms = ['Product', 'detailed', 'description', 'Electronics', 'Books', 'quality', 'premium']
@@ -112,10 +112,11 @@ class PostgresBenchmarkStrategy(BenchmarkStrategy):
 
             for _ in range(query_count):
                 term = random.choice(search_terms)
-                # Simple text search using ILIKE (case-insensitive LIKE)
-                results = list(Product.objects.filter(
-                    Q(name__icontains=term) | Q(description__icontains=term)
-                )[:20])  # Limit to 20 results
+                # Use PostgreSQL's proper full-text search with GIN index
+                results = list(Product.objects.extra(
+                    where=["to_tsvector('english', name || ' ' || description || ' ' || category) @@ plainto_tsquery('english', %s)"],
+                    params=[term]
+                )[:20])
 
             end_time = time.time()
             return end_time - start_time, 'FullTextSearchSimple'
@@ -198,7 +199,8 @@ class MongoBenchmarkStrategy(BenchmarkStrategy):
 
     def full_text_search_simple(self, query_count):
         """
-        Simple full-text search using MongoDB's regex search
+        Simple full-text search using MongoDB's proper $text search (fair comparison)
+        Uses the weighted text index for proper full-text search capabilities
         """
         try:
             search_terms = ['Product', 'detailed', 'description', 'Electronics', 'Books', 'quality', 'premium']
@@ -206,13 +208,11 @@ class MongoBenchmarkStrategy(BenchmarkStrategy):
 
             for _ in range(query_count):
                 term = random.choice(search_terms)
-                # Simple regex search (case-insensitive)
-                results = list(self.client.find({
-                    '$or': [
-                        {'name': {'$regex': term, '$options': 'i'}},
-                        {'description': {'$regex': term, '$options': 'i'}}
-                    ]
-                }).limit(20))
+                # Use MongoDB's proper $text search with index
+                results = list(self.client.find(
+                    {'$text': {'$search': term}},
+                    {'score': {'$meta': 'textScore'}}
+                ).sort([('score', {'$meta': 'textScore'})]).limit(20))
 
             end_time = time.time()
             return end_time - start_time, 'FullTextSearchSimple'
@@ -315,8 +315,8 @@ class ElasticBenchmarkStrategy(BenchmarkStrategy):
 
     def full_text_search_simple(self, query_count):
         """
-        Simple full-text search using Elasticsearch's match query
-        This showcases basic full-text capabilities with automatic relevance scoring
+        Simple full-text search using Elasticsearch's basic match query (fair comparison)
+        Uses simple match without boosting to match other databases' simplicity
         """
         try:
             search_terms = ['Product', 'detailed', 'description', 'Electronics', 'Books', 'quality', 'premium']
@@ -325,13 +325,13 @@ class ElasticBenchmarkStrategy(BenchmarkStrategy):
             for _ in range(query_count):
                 term = random.choice(search_terms)
 
-                # Simple multi-field match query
+                # Simple multi-field match query without boosting (fair comparison)
                 query = {
                     "size": 20,
                     "query": {
                         "multi_match": {
                             "query": term,
-                            "fields": ["name^2", "description", "category"],  # Boost name field
+                            "fields": ["name", "description", "category"],
                             "type": "best_fields"
                         }
                     }
