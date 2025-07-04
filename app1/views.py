@@ -6,7 +6,7 @@ from django.conf import settings
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from rest_framework.test import APIRequestFactory
 
 import time
@@ -15,7 +15,7 @@ import logging
 from decimal import Decimal
 
 from .models import Product
-from .methods import BenchmarkOperationBuilder
+from .methods import BenchmarkOperationBuilder, DatabaseCleanup
 from .serializers import ProductSerializer, BenchmarkResultSerializer
 from .connections import get_mongo_client, get_els_client
 
@@ -125,7 +125,12 @@ class BenchmarkAPIView(APIView):
 
 
 def benchmark_results_view(request):
-    """Render the benchmark results table view"""
+    """ structure to send to html:
+    [{'database': 'Elastic', 'operation': 'Write', 'total_time': 1.5426812171936035, 'records_processed': 1000, 'avg_time_per_record': 0.0015426812171936036},
+     {'database': 'Elastic', 'operation': 'Read', 'total_time': 1.1317076683044434, 'records_processed': 100, 'avg_time_per_record': 0.011317076683044434},
+     {'database': 'Mongo', 'operation': 'Write', 'total_time': 0.11195850372314453, 'records_processed': 1000, 'avg_time_per_record': 0.00011195850372314454},
+     {'database': 'Mongo', 'operation': 'Read', ....
+    """
     # Results will be shown after running benchmark via API
     factory = APIRequestFactory()
     get_request = factory.get('/fake-path/')  # URL can be dummy
@@ -144,3 +149,14 @@ def benchmark_results_view(request):
         return render(request, 'app1/benchmark_results.html', {
             'results': []
         })
+
+
+def pure_benchmark_view(request):
+    dbs_benchmarks = [{'database': 'Elastic', 'operation': 'Write', 'total_time': 1.5426812171936035}]
+    return render(request, 'app1/benchmark_results.html', {'results': dbs_benchmarks})
+
+
+def remove_tables(request):
+    cleanup_utility = DatabaseCleanup()
+    cleanup_utility.run_complete_cleanup()
+    return HttpResponse("ok")

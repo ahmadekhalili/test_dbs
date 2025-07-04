@@ -4,7 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="857553d7-9172-413e-b1d9-bdc608daa565" name="Changes" comment="" />
+    <list default="true" id="857553d7-9172-413e-b1d9-bdc608daa565" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app1/database_operations.py" beforeDir="false" afterPath="$PROJECT_DIR$/app1/database_operations.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app1/methods.py" beforeDir="false" afterPath="$PROJECT_DIR$/app1/methods.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app1/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/app1/migrations/0001_initial.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app1/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/app1/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app1/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app1/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dbs_test/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/dbs_test/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/django.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/django.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/web.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/web.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -28,20 +39,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/backs/others/test_dbs",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/backs/others/test_dbs&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\backs\others\test_dbs" />
@@ -96,7 +107,11 @@
       <workItem from="1748943733188" duration="60000" />
       <workItem from="1749570078726" duration="1773000" />
       <workItem from="1749687738322" duration="1650000" />
-      <workItem from="1749715073282" duration="23838000" />
+      <workItem from="1749715073282" duration="38753000" />
+      <workItem from="1749893448545" duration="147000" />
+      <workItem from="1751523710739" duration="10763000" />
+      <workItem from="1751627671499" duration="2412000" />
+      <workItem from="1751639027301" duration="738000" />
     </task>
     <servers />
   </component>

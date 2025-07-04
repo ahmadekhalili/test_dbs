@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
             options={
                 'db_table': 'products',
                 'indexes': [models.Index(fields=['category'], name='products_categor_fce6e6_idx'), models.Index(fields=['price'], name='products_price_fe467e_idx'), models.Index(fields=['rating'], name='products_rating_53cb37_idx'), models.Index(fields=['category', 'price'], name='products_categor_5d9235_idx')],
-                'constraints': [models.CheckConstraint(condition=models.Q(('price__gte', 0)), name='price_non_negative'), models.CheckConstraint(condition=models.Q(('stock__gte', 0)), name='stock_non_negative'), models.CheckConstraint(condition=models.Q(('rating__gte', 0), ('rating__lte', 5)), name='rating_range_valid')],
+                'constraints': [models.CheckConstraint(check=models.Q(('price__gte', 0)), name='price_non_negative'), models.CheckConstraint(check=models.Q(('stock__gte', 0)), name='stock_non_negative'), models.CheckConstraint(check=models.Q(('rating__gte', 0), ('rating__lte', 5)), name='rating_range_valid')],
             },
         ),
     ]

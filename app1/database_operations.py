@@ -103,18 +103,19 @@ class PostgresBenchmarkStrategy(BenchmarkStrategy):
 
     def full_text_search_simple(self, query_count):
         """
-        Simple full-text search using PostgreSQL's built-in text search (fair comparison)
-        Uses to_tsvector and plainto_tsquery for proper full-text search with GIN index
+        IDENTICAL TASK: Simple single-word text search across name and description fields
+        PostgreSQL implementation using basic text search capabilities
         """
         try:
-            search_terms = ['Product', 'detailed', 'description', 'Electronics', 'Books', 'quality', 'premium']
+            # IDENTICAL search terms across all databases
+            search_terms = ['Product', 'Electronics', 'Book', 'quality', 'premium', 'gaming', 'wireless']
             start_time = time.time()
 
             for _ in range(query_count):
                 term = random.choice(search_terms)
-                # Use PostgreSQL's proper full-text search with GIN index
-                results = list(Product.objects.extra(
-                    where=["to_tsvector('english', name || ' ' || description || ' ' || category) @@ plainto_tsquery('english', %s)"],
+                # Basic full-text search - single word lookup
+                list(Product.objects.extra(
+                    where=["to_tsvector('english', name || ' ' || description) @@ plainto_tsquery('english', %s)"],
                     params=[term]
                 )[:20])
 
@@ -126,27 +127,33 @@ class PostgresBenchmarkStrategy(BenchmarkStrategy):
 
     def full_text_search_complex(self, query_count):
         """
-        Complex full-text search using PostgreSQL's built-in text search features
-        Uses SearchVector and SearchQuery for more sophisticated search
+        IDENTICAL TASK: Complex multi-word phrase search with filtering and ranking
+        Real-world scenario: Product search with price filter + relevance ranking
+        PostgreSQL implementation using advanced text search features
         """
         try:
-            search_queries = [
-                'high quality product',
-                'electronics premium',
-                'detailed description',
-                'product rating',
-                'category books'
+            # IDENTICAL complex search scenarios across all databases
+            search_scenarios = [
+                {'phrase': 'premium gaming laptop', 'min_price': 500, 'max_price': 2000},
+                {'phrase': 'wireless smartphone pro', 'min_price': 200, 'max_price': 1200},
+                {'phrase': 'high quality book', 'min_price': 10, 'max_price': 100},
+                {'phrase': 'electronics premium device', 'min_price': 100, 'max_price': 800},
+                {'phrase': 'detailed product description', 'min_price': 50, 'max_price': 500}
             ]
             start_time = time.time()
 
             for _ in range(query_count):
-                query_text = random.choice(search_queries)
-
-                # PostgreSQL full-text search with ranking
+                scenario = random.choice(search_scenarios)
+                
+                # Complex search: phrase + price filter + relevance ranking
                 results = list(Product.objects.annotate(
                     search=SearchVector('name', 'description', 'category'),
-                    rank=SearchRank(SearchVector('name', 'description', 'category'), SearchQuery(query_text))
-                ).filter(search=SearchQuery(query_text)).order_by('-rank')[:20])
+                    rank=SearchRank(SearchVector('name', 'description', 'category'), SearchQuery(scenario['phrase']))
+                ).filter(
+                    search=SearchQuery(scenario['phrase']),
+                    price__gte=scenario['min_price'],
+                    price__lte=scenario['max_price']
+                ).order_by('-rank')[:20])
 
             end_time = time.time()
             return end_time - start_time, 'FullTextSearchComplex'
@@ -199,16 +206,17 @@ class MongoBenchmarkStrategy(BenchmarkStrategy):
 
     def full_text_search_simple(self, query_count):
         """
-        Simple full-text search using MongoDB's proper $text search (fair comparison)
-        Uses the weighted text index for proper full-text search capabilities
+        IDENTICAL TASK: Simple single-word text search across name and description fields
+        MongoDB implementation using $text search with weighted index
         """
         try:
-            search_terms = ['Product', 'detailed', 'description', 'Electronics', 'Books', 'quality', 'premium']
+            # IDENTICAL search terms across all databases
+            search_terms = ['Product', 'Electronics', 'Book', 'quality', 'premium', 'gaming', 'wireless']
             start_time = time.time()
 
             for _ in range(query_count):
                 term = random.choice(search_terms)
-                # Use MongoDB's proper $text search with index
+                # Basic full-text search - single word lookup with MongoDB $text
                 results = list(self.client.find(
                     {'$text': {'$search': term}},
                     {'score': {'$meta': 'textScore'}}
@@ -222,27 +230,35 @@ class MongoBenchmarkStrategy(BenchmarkStrategy):
 
     def full_text_search_complex(self, query_count):
         """
-        Complex full-text search using MongoDB's $text operator with text indexes
-        Note: Requires text index to be created on fields
+        IDENTICAL TASK: Complex multi-word phrase search with filtering and ranking
+        Real-world scenario: Product search with price filter + relevance ranking
+        MongoDB implementation using $text search + aggregation pipeline
         """
         try:
-            search_queries = [
-                'high quality product',
-                'electronics premium',
-                'detailed description',
-                'product rating',
-                'category books'
+            # IDENTICAL complex search scenarios across all databases
+            search_scenarios = [
+                {'phrase': 'premium gaming laptop', 'min_price': 500, 'max_price': 2000},
+                {'phrase': 'wireless smartphone pro', 'min_price': 200, 'max_price': 1200},
+                {'phrase': 'high quality book', 'min_price': 10, 'max_price': 100},
+                {'phrase': 'electronics premium device', 'min_price': 100, 'max_price': 800},
+                {'phrase': 'detailed product description', 'min_price': 50, 'max_price': 500}
             ]
             start_time = time.time()
 
             for _ in range(query_count):
-                query_text = random.choice(search_queries)
-
-                # MongoDB text search with scoring
-                results = list(self.client.find(
-                    {'$text': {'$search': query_text}},
-                    {'score': {'$meta': 'textScore'}}
-                ).sort([('score', {'$meta': 'textScore'})]).limit(20))
+                scenario = random.choice(search_scenarios)
+                
+                # Complex search: phrase + price filter + relevance ranking using aggregation
+                pipeline = [
+                    {'$match': {
+                        '$text': {'$search': scenario['phrase']},
+                        'price': {'$gte': scenario['min_price'], '$lte': scenario['max_price']}
+                    }},
+                    {'$addFields': {'score': {'$meta': 'textScore'}}},
+                    {'$sort': {'score': -1}},
+                    {'$limit': 20}
+                ]
+                results = list(self.client.aggregate(pipeline))
 
             end_time = time.time()
             return end_time - start_time, 'FullTextSearchComplex'
@@ -315,26 +331,28 @@ class ElasticBenchmarkStrategy(BenchmarkStrategy):
 
     def full_text_search_simple(self, query_count):
         """
-        Simple full-text search using Elasticsearch's basic match query (fair comparison)
-        Uses simple match without boosting to match other databases' simplicity
+        IDENTICAL TASK: Simple single-word text search across name and description fields
+        Elasticsearch implementation using basic multi_match query
         """
         try:
-            search_terms = ['Product', 'detailed', 'description', 'Electronics', 'Books', 'quality', 'premium']
+            # IDENTICAL search terms across all databases
+            search_terms = ['Product', 'Electronics', 'Book', 'quality', 'premium', 'gaming', 'wireless']
             start_time = time.time()
 
             for _ in range(query_count):
                 term = random.choice(search_terms)
 
-                # Simple multi-field match query without boosting (fair comparison)
+                # Basic full-text search - single word lookup with Elasticsearch
                 query = {
                     "size": 20,
                     "query": {
                         "multi_match": {
                             "query": term,
-                            "fields": ["name", "description", "category"],
+                            "fields": ["name", "description"],
                             "type": "best_fields"
                         }
-                    }
+                    },
+                    "sort": ["_score"]
                 }
 
                 response = self.client.search(index=self.index_name, body=query)
@@ -347,136 +365,54 @@ class ElasticBenchmarkStrategy(BenchmarkStrategy):
 
     def full_text_search_complex(self, query_count):
         """
-        Complex full-text search showcasing Elasticsearch's advanced features:
-        - Fuzzy matching for typos
-        - Phrase matching
-        - Field boosting
-        - Filtering with search
-        - Highlighting
-        - Custom scoring
+        IDENTICAL TASK: Complex multi-word phrase search with filtering and ranking
+        Real-world scenario: Product search with price filter + relevance ranking
+        Elasticsearch implementation using bool query with phrase matching and filters
         """
         try:
+            # IDENTICAL complex search scenarios across all databases
             search_scenarios = [
-                {
-                    "name": "fuzzy_search",
-                    "query": {
-                        "size": 20,
-                        "query": {
-                            "bool": {
-                                "must": [
-                                    {
-                                        "multi_match": {
-                                            "query": "productt",  # Intentional typo
-                                            "fields": ["name^3", "description"],
-                                            "fuzziness": "AUTO",  # Handle typos
-                                            "prefix_length": 1
-                                        }
-                                    }
-                                ],
-                                "filter": [
-                                    {"range": {"rating": {"gte": 3.0}}}
-                                ]
-                            }
-                        },
-                        "highlight": {
-                            "fields": {
-                                "name": {},
-                                "description": {"fragment_size": 100}
-                            }
-                        }
-                    }
-                },
-                {
-                    "name": "phrase_and_boost",
-                    "query": {
-                        "size": 20,
-                        "query": {
-                            "bool": {
-                                "should": [
-                                    {
-                                        "match_phrase": {
-                                            "description": {
-                                                "query": "detailed description",
-                                                "boost": 2.0
-                                            }
-                                        }
-                                    },
-                                    {
-                                        "match": {
-                                            "name": {
-                                                "query": "premium quality",
-                                                "boost": 1.5
-                                            }
-                                        }
-                                    },
-                                    {
-                                        "term": {
-                                            "category.keyword": {
-                                                "value": "Electronics",
-                                                "boost": 1.2
-                                            }
-                                        }
-                                    }
-                                ],
-                                "minimum_should_match": 1
-                            }
-                        }
-                    }
-                },
-                {
-                    "name": "complex_filtering_aggregation",
-                    "query": {
-                        "size": 0,  # Only aggregations, no docs
-                        "query": {
-                            "bool": {
-                                "must": [
-                                    {
-                                        "match": {
-                                            "description": "product"
-                                        }
-                                    }
-                                ],
-                                "filter": [
-                                    {"range": {"price": {"gte": 50, "lte": 800}}},
-                                    {"range": {"rating": {"gte": 2.0}}}
-                                ]
-                            }
-                        },
-                        "aggs": {
-                            "price_ranges": {
-                                "range": {
-                                    "field": "price",
-                                    "ranges": [
-                                        {"to": 100},
-                                        {"from": 100, "to": 500},
-                                        {"from": 500}
-                                    ]
-                                },
-                                "aggs": {
-                                    "avg_rating": {"avg": {"field": "rating"}},
-                                    "top_categories": {
-                                        "terms": {"field": "category.keyword", "size": 3}
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+                {'phrase': 'premium gaming laptop', 'min_price': 500, 'max_price': 2000},
+                {'phrase': 'wireless smartphone pro', 'min_price': 200, 'max_price': 1200},
+                {'phrase': 'high quality book', 'min_price': 10, 'max_price': 100},
+                {'phrase': 'electronics premium device', 'min_price': 100, 'max_price': 800},
+                {'phrase': 'detailed product description', 'min_price': 50, 'max_price': 500}
             ]
-
             start_time = time.time()
 
             for _ in range(query_count):
                 scenario = random.choice(search_scenarios)
-                response = self.client.search(index=self.index_name, body=scenario["query"])
+                
+                # Complex search: phrase + price filter + relevance ranking
+                query = {
+                    "size": 20,
+                    "query": {
+                        "bool": {
+                            "must": [
+                                {
+                                    "multi_match": {
+                                        "query": scenario['phrase'],
+                                        "fields": ["name", "description", "category"],
+                                        "type": "phrase"
+                                    }
+                                }
+                            ],
+                            "filter": [
+                                {
+                                    "range": {
+                                        "price": {
+                                            "gte": scenario['min_price'],
+                                            "lte": scenario['max_price']
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "sort": ["_score"]
+                }
 
-                # Optional: Process results to simulate real usage
-                if scenario["name"] == "complex_filtering_aggregation":
-                    # Extract aggregation results
-                    aggs = response.get('aggregations', {})
-                elif 'highlight' in scenario["query"]:
-                    # Process highlighted results
-                    hits = response.get('hits', {}).get('hits', [])
+                response = self.client.search(index=self.index_name, body=query)
 
             end_time = time.time()
             return end_time - start_time, 'FullTextSearchComplex'
