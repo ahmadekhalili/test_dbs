@@ -558,3 +558,1110 @@ LINE 1: SELECT COUNT(*) AS "__count" FROM "products"
 [2025-07-04 14:36:14] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/urls.py changed, reloading.
 [2025-07-04 14:36:16] INFO [MainThread] Watching for file changes with StatReloader
 [2025-07-04 14:36:22] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10038
+[2025-07-04 14:40:15] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-04 14:40:18] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 14:40:53] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/models.py changed, reloading.
+[2025-07-04 14:40:54] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 14:43:04] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/models.py changed, reloading.
+[2025-07-04 14:43:05] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 14:43:20] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 14:43:35] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 14:51:19] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-04 14:51:22] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 14:54:25] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 14:54:48] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 14:55:41] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10038
+[2025-07-04 14:57:01] ERROR [Thread-2 (process_request_thread)] Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/backs/others/test_dbs/app1/views.py", line 142, in benchmark_results_view
+    response = BenchmarkAPIView().get(get_request).data
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/backs/others/test_dbs/app1/views.py", line 92, in get
+    benchmark_operations = operation_builder.generate_argument_for_operations(settings.OPERATIONS_COUNT).build_operations()
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/backs/others/test_dbs/app1/methods.py", line 227, in build_operations
+    module = importlib.import_module('app1.database_operations')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/mnt/c/backs/others/test_dbs/app1/database_operations.py", line 21, in <module>
+    postgres_table_name = settigns.DATABASE['default']['TABLE']
+                          ^^^^^^^^
+NameError: name 'settigns' is not defined
+[2025-07-04 14:57:01] ERROR [Thread-2 (process_request_thread)] "GET / HTTP/1.1" 500 121025
+[2025-07-04 14:57:29] ERROR [Thread-3 (process_request_thread)] Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/backs/others/test_dbs/app1/views.py", line 142, in benchmark_results_view
+    response = BenchmarkAPIView().get(get_request).data
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/backs/others/test_dbs/app1/views.py", line 92, in get
+    benchmark_operations = operation_builder.generate_argument_for_operations(settings.OPERATIONS_COUNT).build_operations()
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/backs/others/test_dbs/app1/methods.py", line 227, in build_operations
+    module = importlib.import_module('app1.database_operations')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/mnt/c/backs/others/test_dbs/app1/database_operations.py", line 9, in <module>
+    from django.conf import settigns
+ImportError: cannot import name 'settigns' from 'django.conf' (/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/conf/__init__.py)
+[2025-07-04 14:57:29] ERROR [Thread-3 (process_request_thread)] "GET / HTTP/1.1" 500 118735
+[2025-07-04 14:58:31] ERROR [Thread-4 (process_request_thread)] Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/backs/others/test_dbs/app1/views.py", line 142, in benchmark_results_view
+    response = BenchmarkAPIView().get(get_request).data
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/backs/others/test_dbs/app1/views.py", line 92, in get
+    benchmark_operations = operation_builder.generate_argument_for_operations(settings.OPERATIONS_COUNT).build_operations()
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/backs/others/test_dbs/app1/methods.py", line 227, in build_operations
+    module = importlib.import_module('app1.database_operations')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/mnt/c/backs/others/test_dbs/app1/database_operations.py", line 22, in <module>
+    postgres_table_name = settings.DATABASE['default']['TABLE']
+                          ^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/conf/__init__.py", line 83, in __getattr__
+    val = getattr(self._wrapped, name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Settings' object has no attribute 'DATABASE'. Did you mean: 'DATABASES'?
+[2025-07-04 14:58:31] ERROR [Thread-4 (process_request_thread)] "GET / HTTP/1.1" 500 125595
+[2025-07-04 14:58:55] ERROR [Thread-5 (process_request_thread)] Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/backs/others/test_dbs/app1/views.py", line 142, in benchmark_results_view
+    response = BenchmarkAPIView().get(get_request).data
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/backs/others/test_dbs/app1/views.py", line 92, in get
+    benchmark_operations = operation_builder.generate_argument_for_operations(settings.OPERATIONS_COUNT).build_operations()
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/backs/others/test_dbs/app1/methods.py", line 227, in build_operations
+    module = importlib.import_module('app1.database_operations')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/mnt/c/backs/others/test_dbs/app1/database_operations.py", line 23, in <module>
+    POSTGRES_MODEL = apps.get_model(postgres_table_name)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/apps/registry.py", line 204, in get_model
+    app_label, model_name = app_label.split('.')
+    ^^^^^^^^^^^^^^^^^^^^^
+ValueError: not enough values to unpack (expected 2, got 1)
+[2025-07-04 14:58:55] ERROR [Thread-5 (process_request_thread)] "GET / HTTP/1.1" 500 125713
+[2025-07-04 14:59:45] ERROR [Thread-6 (process_request_thread)] Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/backs/others/test_dbs/app1/views.py", line 142, in benchmark_results_view
+    response = BenchmarkAPIView().get(get_request).data
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/backs/others/test_dbs/app1/views.py", line 92, in get
+    benchmark_operations = operation_builder.generate_argument_for_operations(settings.OPERATIONS_COUNT).build_operations()
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/backs/others/test_dbs/app1/methods.py", line 227, in build_operations
+    module = importlib.import_module('app1.database_operations')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/mnt/c/backs/others/test_dbs/app1/database_operations.py", line 23, in <module>
+    POSTGRES_MODEL = apps.get_model(postgres_table_name)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/apps/registry.py", line 204, in get_model
+    app_label, model_name = app_label.split('.')
+    ^^^^^^^^^^^^^^^^^^^^^
+ValueError: not enough values to unpack (expected 2, got 1)
+[2025-07-04 14:59:45] ERROR [Thread-6 (process_request_thread)] "GET / HTTP/1.1" 500 125713
+[2025-07-04 15:00:11] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 15:00:13] ERROR [Thread-1 (process_request_thread)] Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/backs/others/test_dbs/app1/views.py", line 142, in benchmark_results_view
+    response = BenchmarkAPIView().get(get_request).data
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/backs/others/test_dbs/app1/views.py", line 92, in get
+    benchmark_operations = operation_builder.generate_argument_for_operations(settings.OPERATIONS_COUNT).build_operations()
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/backs/others/test_dbs/app1/methods.py", line 227, in build_operations
+    module = importlib.import_module('app1.database_operations')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/mnt/c/backs/others/test_dbs/app1/database_operations.py", line 23, in <module>
+    POSTGRES_MODEL = apps.get_model(postgres_table_name)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/apps/registry.py", line 204, in get_model
+    app_label, model_name = app_label.split('.')
+    ^^^^^^^^^^^^^^^^^^^^^
+ValueError: not enough values to unpack (expected 2, got 1)
+[2025-07-04 15:00:13] ERROR [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 500 125712
+[2025-07-04 15:00:45] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 15:00:47] ERROR [Thread-1 (process_request_thread)] Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/backs/others/test_dbs/app1/views.py", line 142, in benchmark_results_view
+    response = BenchmarkAPIView().get(get_request).data
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/backs/others/test_dbs/app1/views.py", line 92, in get
+    benchmark_operations = operation_builder.generate_argument_for_operations(settings.OPERATIONS_COUNT).build_operations()
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/backs/others/test_dbs/app1/methods.py", line 227, in build_operations
+    module = importlib.import_module('app1.database_operations')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/mnt/c/backs/others/test_dbs/app1/database_operations.py", line 24, in <module>
+    POSTGRES_MODEL = apps.get_model(postgres_table_name)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/apps/registry.py", line 204, in get_model
+    app_label, model_name = app_label.split('.')
+    ^^^^^^^^^^^^^^^^^^^^^
+ValueError: not enough values to unpack (expected 2, got 1)
+[2025-07-04 15:00:47] ERROR [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 500 125762
+[2025-07-04 15:02:14] INFO [Thread-2 (process_request_thread)] "GET / HTTP/1.1" 200 17493
+[2025-07-04 15:08:53] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-04 15:08:54] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 15:08:57] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-04 15:08:57] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 15:09:10] INFO [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 200 17493
+[2025-07-04 15:09:11] INFO [Thread-2 (process_request_thread)] "GET /pure HTTP/1.1" 200 10038
+[2025-07-04 15:11:54] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/models.py changed, reloading.
+[2025-07-04 15:11:55] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 15:12:11] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 15:12:29] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/admin.py changed, reloading.
+[2025-07-04 15:12:30] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 15:12:32] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/admin.py changed, reloading.
+[2025-07-04 15:12:33] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 15:13:13] INFO [Thread-1 (process_request_thread)] "GET /admin/ HTTP/1.1" 302 0
+[2025-07-04 15:13:13] INFO [Thread-1 (process_request_thread)] "GET /admin/login/?next=/admin/ HTTP/1.1" 200 2214
+[2025-07-04 15:13:13] INFO [Thread-3 (process_request_thread)] "GET /static/admin/css/base.css HTTP/1.1" 304 0
+[2025-07-04 15:13:13] INFO [Thread-2 (process_request_thread)] "GET /static/admin/css/responsive.css HTTP/1.1" 304 0
+[2025-07-04 15:13:13] INFO [Thread-4 (process_request_thread)] "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 304 0
+[2025-07-04 15:13:13] INFO [Thread-1 (process_request_thread)] "GET /static/admin/css/login.css HTTP/1.1" 200 939
+[2025-07-04 15:13:13] INFO [Thread-5 (process_request_thread)] "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 304 0
+[2025-07-04 15:13:13] INFO [Thread-1 (process_request_thread)] "GET /static/admin/css/fonts.css HTTP/1.1" 200 423
+[2025-07-04 15:13:13] INFO [Thread-5 (process_request_thread)] "GET /static/admin/fonts/Roboto-Light-webfont.woff HTTP/1.1" 200 85692
+[2025-07-04 15:13:13] INFO [Thread-1 (process_request_thread)] "GET /static/admin/fonts/Roboto-Regular-webfont.woff HTTP/1.1" 200 85876
+[2025-07-04 15:13:20] INFO [Thread-6 (process_request_thread)] "POST /admin/login/?next=/admin/ HTTP/1.1" 302 0
+[2025-07-04 15:13:20] INFO [Thread-6 (process_request_thread)] "GET /admin/ HTTP/1.1" 200 4372
+[2025-07-04 15:13:20] INFO [Thread-6 (process_request_thread)] "GET /static/admin/css/dashboard.css HTTP/1.1" 304 0
+[2025-07-04 15:13:21] INFO [Thread-6 (process_request_thread)] "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 304 0
+[2025-07-04 15:13:21] INFO [Thread-7 (process_request_thread)] "GET /static/admin/img/icon-changelink.svg HTTP/1.1" 304 0
+[2025-07-04 15:13:21] INFO [Thread-8 (process_request_thread)] "GET /static/admin/fonts/Roboto-Bold-webfont.woff HTTP/1.1" 200 86184
+[2025-07-04 15:13:23] INFO [Thread-6 (process_request_thread)] "GET /admin/app1/test2/ HTTP/1.1" 200 28847
+[2025-07-04 15:13:23] INFO [Thread-6 (process_request_thread)] "GET /static/admin/css/changelists.css HTTP/1.1" 304 0
+[2025-07-04 15:13:23] INFO [Thread-7 (process_request_thread)] "GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 304 0
+[2025-07-04 15:13:23] INFO [Thread-9 (process_request_thread)] "GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 304 0
+[2025-07-04 15:13:23] INFO [Thread-11 (process_request_thread)] "GET /static/admin/js/prepopulate.js HTTP/1.1" 304 0
+[2025-07-04 15:13:23] INFO [Thread-10 (process_request_thread)] "GET /static/admin/js/urlify.js HTTP/1.1" 304 0
+[2025-07-04 15:13:23] INFO [Thread-9 (process_request_thread)] "GET /static/admin/js/actions.js HTTP/1.1" 304 0
+[2025-07-04 15:13:23] INFO [Thread-7 (process_request_thread)] "GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 304 0
+[2025-07-04 15:13:23] INFO [Thread-10 (process_request_thread)] "GET /static/admin/js/jquery.init.js HTTP/1.1" 304 0
+[2025-07-04 15:13:23] INFO [Thread-11 (process_request_thread)] "GET /static/admin/js/core.js HTTP/1.1" 304 0
+[2025-07-04 15:13:23] INFO [Thread-8 (process_request_thread)] "GET /admin/jsi18n/ HTTP/1.1" 200 3325
+[2025-07-04 15:13:23] INFO [Thread-7 (process_request_thread)] "GET /static/admin/img/tooltag-add.svg HTTP/1.1" 304 0
+[2025-07-04 15:20:41] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-04 15:20:44] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 15:25:59] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-04 15:26:01] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 15:26:05] ERROR [Thread-1 (process_request_thread)] Internal Server Error: /pure
+Traceback (most recent call last):
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/backs/others/test_dbs/app1/views.py", line 170, in pure_benchmark_view
+    records = [POSTGRES_MODEL(**dct) for dct in data]
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/db/models/base.py", line 503, in __init__
+    raise TypeError("%s() got an unexpected keyword argument '%s'" % (cls.__name__, kwarg))
+TypeError: Test2() got an unexpected keyword argument '_id'
+[2025-07-04 15:26:05] ERROR [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 500 86479
+[2025-07-04 15:28:28] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-04 15:28:29] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 15:28:37] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10038
+[2025-07-04 15:28:39] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10038
+[2025-07-04 15:29:15] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-04 15:29:16] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 15:29:56] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-04 15:29:58] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 15:30:10] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10038
+[2025-07-04 15:32:51] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-04 15:32:52] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 15:33:19] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-04 15:33:20] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 15:33:24] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10763
+[2025-07-04 15:33:41] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 15:33:44] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10763
+[2025-07-04 15:34:01] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-04 15:34:02] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 15:34:25] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-04 15:34:25] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 15:34:29] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10763
+[2025-07-04 15:34:49] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-04 15:34:50] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 15:34:59] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10763
+[2025-07-04 15:39:57] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-04 15:40:00] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 15:41:21] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-04 15:41:22] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 15:41:41] ERROR [Thread-1 (process_request_thread)] Internal Server Error: /pure
+Traceback (most recent call last):
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/backs/others/test_dbs/app1/views.py", line 175, in pure_benchmark_view
+    print(Product.objects.filder(category="Product 500"))
+          ^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Manager' object has no attribute 'filder'. Did you mean: 'filter'?
+[2025-07-04 15:41:41] ERROR [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 500 85540
+[2025-07-04 15:41:51] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-04 15:41:52] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 15:42:00] ERROR [Thread-1 (process_request_thread)] Internal Server Error: /pure
+Traceback (most recent call last):
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/backs/others/test_dbs/app1/views.py", line 181, in pure_benchmark_view
+    logger.info(f"writtend: {len(records)} to db. data generated: {len(data)}. write_count: {write_count}")
+                                 ^^^^^^^
+NameError: name 'records' is not defined
+[2025-07-04 15:42:00] ERROR [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 500 86221
+[2025-07-04 15:42:20] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-04 15:42:22] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 15:42:24] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10763
+[2025-07-04 15:43:31] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-04 15:43:33] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 15:44:41] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-04 15:44:43] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 15:45:03] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-04 15:45:05] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 15:45:16] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10763
+[2025-07-04 15:45:35] INFO [Thread-2 (process_request_thread)] "GET /pure HTTP/1.1" 200 10763
+[2025-07-04 15:48:23] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-04 15:48:25] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 15:48:39] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10763
+[2025-07-04 15:54:32] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-04 15:54:35] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 18:38:16] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/models.py changed, reloading.
+[2025-07-04 18:38:19] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 18:40:55] INFO [MainThread] /mnt/c/backs/others/test_dbs/setup_tables.py changed, reloading.
+[2025-07-04 18:40:56] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 18:51:26] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 18:51:27] ERROR [Thread-1 (process_request_thread)] Internal Server Error: /admin/app1/test2/
+Traceback (most recent call last):
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UndefinedColumn: column app1_test2.name2 does not exist
+LINE 1: SELECT "app1_test2"."id", "app1_test2"."name", "app1_test2"....
+                                                       ^
+HINT:  Perhaps you meant to reference the column "app1_test2.name".
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/contrib/admin/options.py", line 616, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/utils/decorators.py", line 130, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/views/decorators/cache.py", line 44, in _wrapped_view_func
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/contrib/admin/sites.py", line 232, in inner
+    return view(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/utils/decorators.py", line 43, in _wrapper
+    return bound_method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/utils/decorators.py", line 130, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/contrib/admin/options.py", line 1815, in changelist_view
+    'selection_note': _('0 of %(cnt)s selected') % {'cnt': len(cl.result_list)},
+                                                           ^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/db/models/query.py", line 262, in __len__
+    self._fetch_all()
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/db/models/query.py", line 1324, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/db/models/query.py", line 51, in __iter__
+    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/db/models/sql/compiler.py", line 1175, in execute_sql
+    cursor.execute(sql, params)
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 98, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 66, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 75, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 79, in _execute
+    with self.db.wrap_database_errors:
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/db/utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/db/backends/utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.ProgrammingError: column app1_test2.name2 does not exist
+LINE 1: SELECT "app1_test2"."id", "app1_test2"."name", "app1_test2"....
+                                                       ^
+HINT:  Perhaps you meant to reference the column "app1_test2.name".
+
+[2025-07-04 18:51:27] ERROR [Thread-1 (process_request_thread)] "GET /admin/app1/test2/ HTTP/1.1" 500 161981
+[2025-07-04 18:52:01] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 18:52:06] INFO [Thread-1 (process_request_thread)] "GET /admin/app1/test2/ HTTP/1.1" 200 29154
+[2025-07-04 18:52:06] INFO [Thread-1 (process_request_thread)] "GET /admin/jsi18n/ HTTP/1.1" 200 3325
+[2025-07-04 18:52:06] INFO [Thread-3 (process_request_thread)] "GET /static/admin/fonts/Roboto-Bold-webfont.woff HTTP/1.1" 200 86184
+[2025-07-04 18:52:06] INFO [Thread-1 (process_request_thread)] "GET /static/admin/fonts/Roboto-Regular-webfont.woff HTTP/1.1" 200 85876
+[2025-07-04 18:52:06] INFO [Thread-2 (process_request_thread)] "GET /static/admin/fonts/Roboto-Light-webfont.woff HTTP/1.1" 200 85692
+[2025-07-04 18:58:50] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-04 18:58:52] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 18:59:08] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/admin.py changed, reloading.
+[2025-07-04 18:59:09] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 18:59:29] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 18:59:34] WARNING [Thread-1 (process_request_thread)] Not Found: /admin/app1/test2/
+[2025-07-04 18:59:34] WARNING [Thread-1 (process_request_thread)] "GET /admin/app1/test2/ HTTP/1.1" 404 4668
+[2025-07-04 18:59:38] INFO [Thread-2 (process_request_thread)] "GET /admin/app1/ HTTP/1.1" 200 3152
+[2025-07-04 18:59:40] INFO [Thread-3 (process_request_thread)] "GET /admin/app1/product2/ HTTP/1.1" 200 29796
+[2025-07-04 18:59:40] INFO [Thread-3 (process_request_thread)] "GET /admin/jsi18n/ HTTP/1.1" 200 3325
+[2025-07-04 19:01:18] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-04 19:01:20] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 19:01:31] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-04 19:01:32] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 19:01:46] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10763
+[2025-07-04 19:01:51] INFO [Thread-2 (process_request_thread)] "GET /admin/app1/product2/ HTTP/1.1" 200 29796
+[2025-07-04 19:01:51] INFO [Thread-2 (process_request_thread)] "GET /admin/jsi18n/ HTTP/1.1" 200 3325
+[2025-07-04 19:01:52] INFO [Thread-2 (process_request_thread)] "GET /admin/app1/product2/ HTTP/1.1" 200 29796
+[2025-07-04 19:01:52] INFO [Thread-2 (process_request_thread)] "GET /admin/jsi18n/ HTTP/1.1" 200 3325
+[2025-07-04 19:02:04] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-04 19:02:05] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 19:02:15] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10763
+[2025-07-04 19:02:25] INFO [Thread-2 (process_request_thread)] "GET /admin/app1/product2/ HTTP/1.1" 200 5227
+[2025-07-04 19:02:25] INFO [Thread-2 (process_request_thread)] "GET /admin/jsi18n/ HTTP/1.1" 200 3325
+[2025-07-04 19:02:49] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-04 19:02:51] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 19:03:12] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10763
+[2025-07-04 19:07:45] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-04 19:07:46] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 19:08:12] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10764
+[2025-07-04 19:10:02] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-04 19:10:04] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 19:11:06] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-04 19:11:07] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 19:12:55] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-04 19:12:57] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 19:14:49] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-04 19:14:51] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 19:14:53] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10763
+[2025-07-04 19:15:13] INFO [Thread-2 (process_request_thread)] "GET /pure HTTP/1.1" 200 10763
+[2025-07-04 19:15:16] INFO [Thread-2 (process_request_thread)] "GET /pure HTTP/1.1" 200 10763
+[2025-07-04 19:15:40] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-04 19:15:41] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 19:16:42] ERROR [Thread-1 (process_request_thread)] Internal Server Error: /pure
+Traceback (most recent call last):
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/backs/others/test_dbs/app1/views.py", line 184, in pure_benchmark_view
+    list(Product.objects.filter(name2=f"Product {i}"))
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/db/models/query.py", line 941, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/db/models/query.py", line 961, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/db/models/query.py", line 968, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/db/models/sql/query.py", line 1416, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/db/models/sql/query.py", line 1435, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/db/models/sql/query.py", line 1309, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg)
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/db/models/sql/query.py", line 1135, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/db/models/sql/query.py", line 1562, in names_to_path
+    raise FieldError("Cannot resolve keyword '%s' into field. "
+django.core.exceptions.FieldError: Cannot resolve keyword 'name2' into field. Choices are: category, description, id, name, price, rating, stock
+[2025-07-04 19:16:42] ERROR [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 500 123819
+[2025-07-04 19:17:32] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-04 19:17:33] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 19:20:08] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10765
+[2025-07-04 19:20:13] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-04 19:20:14] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 19:20:48] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10763
+[2025-07-04 19:50:36] INFO [Thread-2 (process_request_thread)] "GET /pure HTTP/1.1" 200 10763
+[2025-07-04 19:50:49] INFO [Thread-2 (process_request_thread)] "GET /pure HTTP/1.1" 200 10763
+[2025-07-04 19:51:15] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-04 19:51:19] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 19:51:23] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10763
+[2025-07-04 19:51:34] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-04 19:51:34] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 19:51:38] ERROR [Thread-1 (process_request_thread)] Internal Server Error: /pure
+Traceback (most recent call last):
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/backs/others/test_dbs/app1/views.py", line 169, in pure_benchmark_view
+    ids = random.sample(range(10000, 20000), settings.OPERATIONS_COUNT['read'])  # 500 عدد تصادفی بدون تکرار
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/random.py", line 430, in sample
+    raise ValueError("Sample larger than population or is negative")
+ValueError: Sample larger than population or is negative
+[2025-07-04 19:51:38] ERROR [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 500 79620
+[2025-07-04 19:51:47] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-04 19:51:48] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 19:52:09] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10763
+[2025-07-04 19:53:44] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-04 19:53:46] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 19:54:26] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-04 19:54:27] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 19:54:40] INFO [Thread-2 (process_request_thread)] "GET /pure HTTP/1.1" 200 10763
+[2025-07-04 19:54:59] INFO [Thread-3 (process_request_thread)] "GET /pure HTTP/1.1" 200 10763
+[2025-07-04 19:55:08] INFO [Thread-3 (process_request_thread)] "GET /pure HTTP/1.1" 200 10763
+[2025-07-04 19:55:15] INFO [Thread-3 (process_request_thread)] "GET /pure HTTP/1.1" 200 10763
+[2025-07-04 19:55:28] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-04 19:55:28] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 19:55:43] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10763
+[2025-07-04 19:55:50] INFO [Thread-2 (process_request_thread)] "GET /pure HTTP/1.1" 200 10763
+[2025-07-04 20:03:44] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-04 20:03:47] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 20:04:14] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10764
+[2025-07-04 20:07:27] INFO [Thread-2 (process_request_thread)] "GET /pure HTTP/1.1" 200 10764
+[2025-07-04 20:07:41] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-04 20:07:44] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-04 20:08:11] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10765
+[2025-07-04 20:09:11] INFO [Thread-2 (process_request_thread)] "GET /pure HTTP/1.1" 200 10765
+[2025-07-05 06:01:51] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 06:01:59] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10763
+[2025-07-05 06:01:59] WARNING [Thread-1 (process_request_thread)] Not Found: /favicon.ico
+[2025-07-05 06:01:59] WARNING [Thread-1 (process_request_thread)] "GET /favicon.ico HTTP/1.1" 404 2952
+[2025-07-05 06:03:39] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-05 06:03:41] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 06:03:48] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-05 06:03:49] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 06:04:07] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10763
+[2025-07-05 06:14:12] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-05 06:14:18] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 06:16:04] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-05 06:16:05] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 06:17:58] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-05 06:17:59] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 06:19:19] ERROR [Thread-1 (process_request_thread)] Internal Server Error: /pure
+Traceback (most recent call last):
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/backs/others/test_dbs/app1/views.py", line 180, in pure_benchmark_view
+    ids_cursor = collection1.aggregate([
+                 ^^^^^^^^^^^
+NameError: name 'collection1' is not defined. Did you mean: 'connection'?
+[2025-07-05 06:19:19] ERROR [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 500 76810
+[2025-07-05 06:19:41] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-05 06:19:42] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 06:19:50] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10763
+[2025-07-05 06:20:57] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-05 06:20:58] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 06:21:02] ERROR [Thread-1 (process_request_thread)] Internal Server Error: /pure
+Traceback (most recent call last):
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/backs/others/test_dbs/app1/views.py", line 185, in pure_benchmark_view
+    logger.info(f"ids: {dict(mongo_collection2.find({'_id': ids[0]}))}")
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: dictionary update sequence element #0 has length 9; 2 is required
+[2025-07-05 06:21:02] ERROR [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 500 82401
+[2025-07-05 06:21:35] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-05 06:21:36] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 06:21:38] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10763
+[2025-07-05 06:21:52] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-05 06:21:53] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 06:22:20] ERROR [Thread-1 (process_request_thread)] Internal Server Error: /pure
+Traceback (most recent call last):
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/backs/others/test_dbs/app1/views.py", line 186, in pure_benchmark_view
+    logger.info(f"ids: {dict(mongo_collection2.find({'_id': ids[0]}))}")
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: dictionary update sequence element #0 has length 9; 2 is required
+[2025-07-05 06:22:20] ERROR [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 500 82364
+[2025-07-05 06:22:28] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-05 06:22:29] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 06:22:30] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10763
+[2025-07-05 06:22:53] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-05 06:22:54] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 06:23:06] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-05 06:23:06] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 06:23:13] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10763
+[2025-07-05 06:23:24] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-05 06:23:24] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 06:23:37] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10763
+[2025-07-05 06:23:55] INFO [Thread-2 (process_request_thread)] "GET /pure HTTP/1.1" 200 10763
+[2025-07-05 08:17:30] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-05 08:17:33] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 08:17:49] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10759
+[2025-07-05 09:35:15] INFO [Thread-2 (process_request_thread)] "GET /pure HTTP/1.1" 200 10759
+[2025-07-05 09:35:28] INFO [Thread-2 (process_request_thread)] "GET /pure HTTP/1.1" 200 10759
+[2025-07-05 09:35:45] WARNING [Thread-3 (process_request_thread)] Not Found: /favicon.ico
+[2025-07-05 09:35:45] WARNING [Thread-3 (process_request_thread)] "GET /favicon.ico HTTP/1.1" 404 2952
+[2025-07-05 09:40:26] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-05 09:40:28] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 09:41:36] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10759
+[2025-07-05 09:41:45] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-05 09:41:48] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 09:42:04] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10759
+[2025-07-05 09:42:13] WARNING [Thread-2 (process_request_thread)] Not Found: /favicon.ico
+[2025-07-05 09:42:13] WARNING [Thread-2 (process_request_thread)] "GET /favicon.ico HTTP/1.1" 404 2952
+[2025-07-05 09:43:44] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-05 09:43:46] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 09:43:55] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10759
+[2025-07-05 09:44:05] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10759
+[2025-07-05 09:44:18] WARNING [Thread-2 (process_request_thread)] Not Found: /favicon.ico
+[2025-07-05 09:44:18] WARNING [Thread-2 (process_request_thread)] "GET /favicon.ico HTTP/1.1" 404 2952
+[2025-07-05 09:48:37] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-05 09:48:38] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 09:50:25] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-05 09:50:28] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 09:50:35] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-05 09:50:36] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 09:51:32] INFO [Thread-2 (process_request_thread)] "GET /pure HTTP/1.1" 200 10761
+[2025-07-05 11:05:15] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-05 11:05:17] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 11:05:23] INFO [Thread-2 (process_request_thread)] "GET /pure HTTP/1.1" 200 10759
+[2025-07-05 11:05:33] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-05 11:05:34] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 11:05:47] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10759
+[2025-07-05 11:06:03] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10759
+[2025-07-05 11:06:20] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-05 11:06:21] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 11:06:38] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10759
+[2025-07-05 11:06:53] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10759
+[2025-07-05 11:07:22] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-05 11:07:23] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 11:07:34] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10759
+[2025-07-05 11:33:33] INFO [Thread-2 (process_request_thread)] "GET /pure HTTP/1.1" 200 10759
+[2025-07-05 11:34:05] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-05 11:34:07] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 11:34:18] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10759
+[2025-07-05 11:34:25] INFO [Thread-2 (process_request_thread)] "GET /pure HTTP/1.1" 200 10759
+[2025-07-05 11:34:32] INFO [Thread-2 (process_request_thread)] "GET /pure HTTP/1.1" 200 10759
+[2025-07-05 11:34:39] INFO [Thread-2 (process_request_thread)] "GET /pure HTTP/1.1" 200 10759
+[2025-07-05 11:34:51] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-05 11:34:52] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 11:35:22] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10759
+[2025-07-05 11:35:30] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10759
+[2025-07-05 11:44:34] INFO [Thread-2 (process_request_thread)] "GET /pure HTTP/1.1" 200 10759
+[2025-07-05 11:44:43] INFO [Thread-2 (process_request_thread)] "GET /pure HTTP/1.1" 200 10759
+[2025-07-05 11:44:52] INFO [Thread-2 (process_request_thread)] "GET /pure HTTP/1.1" 200 10759
+[2025-07-05 11:45:06] WARNING [Thread-3 (process_request_thread)] Not Found: /favicon.ico
+[2025-07-05 11:45:06] WARNING [Thread-3 (process_request_thread)] "GET /favicon.ico HTTP/1.1" 404 2952
+[2025-07-05 11:46:09] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-05 11:46:15] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 11:46:25] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10759
+[2025-07-05 11:46:32] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10759
+[2025-07-05 11:46:39] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10759
+[2025-07-05 11:46:47] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-05 11:46:48] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 11:47:15] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10761
+[2025-07-05 11:47:46] INFO [Thread-2 (process_request_thread)] "GET /pure HTTP/1.1" 200 10761
+[2025-07-05 11:47:58] WARNING [Thread-3 (process_request_thread)] Not Found: /favicon.ico
+[2025-07-05 11:47:58] WARNING [Thread-3 (process_request_thread)] "GET /favicon.ico HTTP/1.1" 404 2952
+[2025-07-05 11:48:04] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-05 11:48:05] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 11:48:37] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10761
+[2025-07-05 11:49:13] INFO [Thread-2 (process_request_thread)] "GET /pure HTTP/1.1" 200 10761
+[2025-07-05 11:49:48] INFO [Thread-3 (process_request_thread)] "GET /pure HTTP/1.1" 200 10761
+[2025-07-05 11:49:59] WARNING [Thread-4 (process_request_thread)] Not Found: /favicon.ico
+[2025-07-05 11:49:59] WARNING [Thread-4 (process_request_thread)] "GET /favicon.ico HTTP/1.1" 404 2952
+[2025-07-05 11:54:15] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-05 11:54:18] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 11:54:42] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10760
+[2025-07-05 11:55:36] INFO [Thread-2 (process_request_thread)] "GET /pure HTTP/1.1" 200 10759
+[2025-07-05 11:55:49] INFO [Thread-3 (process_request_thread)] "GET /pure HTTP/1.1" 200 10759
+[2025-07-05 11:56:59] INFO [Thread-4 (process_request_thread)] "GET /pure HTTP/1.1" 200 10759
+[2025-07-05 11:57:24] INFO [Thread-5 (process_request_thread)] "GET /pure HTTP/1.1" 200 10759
+[2025-07-05 11:57:40] INFO [Thread-5 (process_request_thread)] "GET /pure HTTP/1.1" 200 10759
+[2025-07-05 11:57:47] WARNING [Thread-6 (process_request_thread)] Not Found: /favicon.ico
+[2025-07-05 11:57:47] WARNING [Thread-6 (process_request_thread)] "GET /favicon.ico HTTP/1.1" 404 2952
+[2025-07-05 11:58:29] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-05 11:58:31] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 11:58:44] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-05 11:58:45] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 11:59:32] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10760
+[2025-07-05 12:00:33] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-05 12:00:35] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 12:00:44] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-05 12:00:45] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 12:01:36] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-05 12:01:38] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 12:01:52] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-05 12:01:53] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 12:02:06] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-05 12:02:07] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 12:02:23] INFO [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 200 10781
+[2025-07-05 12:02:41] WARNING [Thread-3 (process_request_thread)] Not Found: /favicon.ico
+[2025-07-05 12:02:41] WARNING [Thread-3 (process_request_thread)] "GET /favicon.ico HTTP/1.1" 404 2952
+[2025-07-05 12:02:50] INFO [Thread-2 (process_request_thread)] "GET /pure HTTP/1.1" 200 10781
+[2025-07-05 12:04:22] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-05 12:04:24] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 12:43:09] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-05 12:43:11] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 12:43:50] INFO [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 200 18252
+[2025-07-05 12:44:52] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-05 12:44:54] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 12:44:58] INFO [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 200 15269
+[2025-07-05 12:45:04] INFO [Thread-2 (process_request_thread)] "GET / HTTP/1.1" 200 15269
+[2025-07-05 12:45:07] INFO [Thread-2 (process_request_thread)] "GET / HTTP/1.1" 200 15269
+[2025-07-05 12:45:10] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-05 12:45:12] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 12:45:19] INFO [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 200 18252
+[2025-07-05 12:48:40] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-05 12:48:41] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 12:48:56] INFO [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 200 15271
+[2025-07-05 12:49:25] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-05 12:49:26] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 12:50:52] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-05 12:50:54] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 12:51:01] INFO [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 200 18252
+[2025-07-05 12:55:12] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/database_operations.py changed, reloading.
+[2025-07-05 12:55:14] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 12:56:27] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-05 12:56:28] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 12:58:08] INFO [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 200 15276
+[2025-07-05 12:59:42] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-05 12:59:44] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 13:00:19] INFO [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 200 13801
+[2025-07-05 13:00:48] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-05 13:00:50] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 13:00:54] INFO [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 200 10805
+[2025-07-05 13:00:58] INFO [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 200 10805
+[2025-07-05 13:01:08] INFO [Thread-2 (process_request_thread)] "GET / HTTP/1.1" 200 10805
+[2025-07-05 13:01:22] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 13:01:24] INFO [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 200 10805
+[2025-07-05 13:01:36] WARNING [Thread-2 (process_request_thread)] Not Found: /favicon.ico
+[2025-07-05 13:01:36] WARNING [Thread-2 (process_request_thread)] "GET /favicon.ico HTTP/1.1" 404 2952
+[2025-07-05 13:06:31] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-05 13:06:34] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 13:06:51] INFO [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 200 18252
+[2025-07-05 13:07:26] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-05 13:07:29] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 13:07:34] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-05 13:07:33] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 13:07:47] INFO [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 200 20551
+[2025-07-05 13:09:48] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-05 13:09:51] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 13:10:02] INFO [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 200 13064
+[2025-07-05 13:10:26] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-05 13:10:28] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 13:10:32] INFO [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 200 13044
+[2025-07-05 13:10:49] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-05 13:10:50] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 13:11:08] INFO [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 200 13075
+[2025-07-05 13:12:18] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-05 13:12:21] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 13:49:54] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-05 13:49:57] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 13:50:11] INFO [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 200 11611
+[2025-07-05 18:29:30] INFO [Thread-2 (process_request_thread)] "GET /admin/app1/product2/ HTTP/1.1" 200 5227
+[2025-07-05 18:29:31] INFO [Thread-2 (process_request_thread)] "GET /static/admin/fonts/Roboto-Light-webfont.woff HTTP/1.1" 200 85692
+[2025-07-05 18:29:31] INFO [Thread-3 (process_request_thread)] "GET /static/admin/fonts/Roboto-Regular-webfont.woff HTTP/1.1" 200 85876
+[2025-07-05 18:29:31] INFO [Thread-4 (process_request_thread)] "GET /static/admin/fonts/Roboto-Bold-webfont.woff HTTP/1.1" 200 86184
+[2025-07-05 18:41:10] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-05 18:41:13] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 18:41:41] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-05 18:41:41] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 19:18:24] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 19:18:26] INFO [Thread-1 (process_request_thread)] "GET /admin/ HTTP/1.1" 200 4387
+[2025-07-05 19:20:01] INFO [Thread-2 (process_request_thread)] "GET /admin/app1/product/ HTTP/1.1" 200 30082
+[2025-07-05 19:20:02] INFO [Thread-2 (process_request_thread)] "GET /admin/jsi18n/ HTTP/1.1" 200 3325
+[2025-07-05 19:58:31] INFO [Thread-5 (process_request_thread)] "GET /admin/app1/product/ HTTP/1.1" 200 30486
+[2025-07-05 19:58:32] INFO [Thread-5 (process_request_thread)] "GET /admin/jsi18n/ HTTP/1.1" 200 3325
+[2025-07-05 20:05:18] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-05 20:05:34] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-05 20:09:04] INFO [Thread-2 (process_request_thread)] "GET / HTTP/1.1" 200 11610
+[2025-07-06 03:44:47] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-06 03:46:05] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-06 03:46:06] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-06 03:50:31] INFO [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 200 11611
+[2025-07-06 05:27:02] WARNING [Thread-2 (process_request_thread)] Not Found: /favicon.ico
+[2025-07-06 05:27:02] WARNING [Thread-2 (process_request_thread)] "GET /favicon.ico HTTP/1.1" 404 2952
+[2025-07-06 05:48:06] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-06 05:48:09] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-06 05:50:14] INFO [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 200 11615
+[2025-07-08 04:25:26] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-08 04:26:12] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-08 04:42:56] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-08 04:43:11] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-08 05:12:41] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-08 05:12:44] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-08 05:13:05] INFO [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 200 11509
+[2025-07-08 05:13:07] WARNING [Thread-1 (process_request_thread)] Not Found: /favicon.ico
+[2025-07-08 05:13:07] WARNING [Thread-1 (process_request_thread)] "GET /favicon.ico HTTP/1.1" 404 2952
+[2025-07-08 05:14:47] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/database_operations.py changed, reloading.
+[2025-07-08 05:14:49] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-08 05:14:54] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-08 05:14:54] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-08 05:15:25] INFO [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 200 11509
+[2025-07-08 05:15:54] INFO [Thread-2 (process_request_thread)] "GET / HTTP/1.1" 200 11509
+[2025-07-08 05:45:58] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-08 05:46:03] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-08 05:47:53] INFO [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 200 11513
+[2025-07-08 05:48:05] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/database_operations.py changed, reloading.
+[2025-07-08 05:48:07] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-08 05:48:26] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-08 05:48:27] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-08 05:49:06] INFO [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 200 11513
+[2025-07-08 07:43:05] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/database_operations.py changed, reloading.
+[2025-07-08 07:43:13] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-08 13:11:47] INFO [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 200 11513
+[2025-07-08 13:25:58] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-08 13:26:13] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-08 13:41:30] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/methods.py changed, reloading.
+[2025-07-08 13:41:42] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-08 13:42:20] ERROR [Thread-1 (process_request_thread)] Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/backs/others/test_dbs/app1/views.py", line 150, in benchmark_results_view
+    response = BenchmarkAPIView().get(get_request).data
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/backs/others/test_dbs/app1/views.py", line 100, in get
+    benchmark_operations = operation_builder.generate_argument_for_operations(settings.OPERATIONS).build_operations()
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/backs/others/test_dbs/app1/methods.py", line 139, in build_operations
+    kwargs = self.kwargs_for_methods.get(method_name, {})
+             ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'BenchmarkOperationBuilder' object has no attribute 'kwargs_for_methods'
+[2025-07-08 13:42:20] ERROR [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 500 84818
+[2025-07-08 13:43:00] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/methods.py changed, reloading.
+[2025-07-08 13:43:02] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-08 13:43:26] INFO [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 200 8990
+[2025-07-08 15:49:55] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/database_operations.py changed, reloading.
+[2025-07-08 15:49:58] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-08 15:50:14] INFO [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 200 8990
+[2025-07-08 15:54:22] INFO [Thread-2 (process_request_thread)] "GET /api/benchmark HTTP/1.1" 301 0
+[2025-07-08 15:54:33] INFO [Thread-2 (process_request_thread)] "GET /api/benchmark/ HTTP/1.1" 200 5607
+[2025-07-08 15:54:33] INFO [Thread-2 (process_request_thread)] "GET /static/rest_framework/css/bootstrap.min.css HTTP/1.1" 304 0
+[2025-07-08 15:54:33] INFO [Thread-2 (process_request_thread)] "GET /static/rest_framework/css/default.css HTTP/1.1" 304 0
+[2025-07-08 15:54:33] INFO [Thread-3 (process_request_thread)] "GET /static/rest_framework/css/prettify.css HTTP/1.1" 304 0
+[2025-07-08 15:54:33] INFO [Thread-4 (process_request_thread)] "GET /static/rest_framework/css/bootstrap-tweaks.css HTTP/1.1" 304 0
+[2025-07-08 15:54:33] INFO [Thread-4 (process_request_thread)] "GET /static/rest_framework/js/ajax-form.js HTTP/1.1" 304 0
+[2025-07-08 15:54:33] INFO [Thread-3 (process_request_thread)] "GET /static/rest_framework/js/jquery-3.7.1.min.js HTTP/1.1" 304 0
+[2025-07-08 15:54:33] INFO [Thread-2 (process_request_thread)] "GET /static/rest_framework/js/csrf.js HTTP/1.1" 304 0
+[2025-07-08 15:54:33] INFO [Thread-4 (process_request_thread)] "GET /static/rest_framework/js/prettify-min.js HTTP/1.1" 304 0
+[2025-07-08 15:54:33] INFO [Thread-2 (process_request_thread)] "GET /static/rest_framework/js/bootstrap.min.js HTTP/1.1" 304 0
+[2025-07-08 15:54:33] INFO [Thread-3 (process_request_thread)] "GET /static/rest_framework/js/default.js HTTP/1.1" 304 0
+[2025-07-08 15:54:34] INFO [Thread-4 (process_request_thread)] "GET /static/rest_framework/js/load-ajax-form.js HTTP/1.1" 304 0
+[2025-07-08 15:54:34] INFO [Thread-4 (process_request_thread)] "GET /static/rest_framework/img/grid.png HTTP/1.1" 304 0
+[2025-07-08 15:56:34] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/database_operations.py changed, reloading.
+[2025-07-08 15:56:36] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-08 15:59:34] INFO [Thread-1 (process_request_thread)] "GET /api/benchmark/ HTTP/1.1" 200 5607
+[2025-07-08 16:02:30] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/database_operations.py changed, reloading.
+[2025-07-08 16:02:33] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-08 16:03:38] INFO [Thread-1 (process_request_thread)] "GET /api/benchmark/ HTTP/1.1" 200 5607
+[2025-07-08 16:04:50] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/database_operations.py changed, reloading.
+[2025-07-08 16:04:52] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-08 16:06:06] INFO [Thread-1 (process_request_thread)] "GET /api/benchmark/ HTTP/1.1" 200 5607
+[2025-07-08 16:06:14] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-08 16:07:06] INFO [Thread-1 (process_request_thread)] "GET /api/benchmark/ HTTP/1.1" 200 5607
+[2025-07-08 16:10:28] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/database_operations.py changed, reloading.
+[2025-07-08 16:10:31] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-08 16:10:56] INFO [Thread-1 (process_request_thread)] "GET /api/benchmark/ HTTP/1.1" 200 5607
+[2025-07-08 16:12:46] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/database_operations.py changed, reloading.
+[2025-07-08 16:12:48] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-08 16:12:53] INFO [Thread-1 (process_request_thread)] "GET /api/benchmark/ HTTP/1.1" 200 5607
+[2025-07-08 16:12:59] INFO [Thread-2 (process_request_thread)] "GET /api/benchmark/ HTTP/1.1" 200 5607
+[2025-07-08 16:13:18] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/database_operations.py changed, reloading.
+[2025-07-08 16:13:20] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-08 16:13:24] INFO [Thread-1 (process_request_thread)] "GET /api/benchmark/ HTTP/1.1" 200 5607
+[2025-07-08 16:14:18] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/database_operations.py changed, reloading.
+[2025-07-08 16:14:19] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-08 16:14:23] INFO [Thread-1 (process_request_thread)] "GET /api/benchmark/ HTTP/1.1" 200 5607
+[2025-07-08 16:14:51] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/database_operations.py changed, reloading.
+[2025-07-08 16:14:53] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-08 16:15:07] INFO [Thread-1 (process_request_thread)] "GET /api/benchmark/ HTTP/1.1" 200 5607
+[2025-07-08 16:26:30] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/database_operations.py changed, reloading.
+[2025-07-08 16:26:34] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-08 17:19:19] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/methods.py changed, reloading.
+[2025-07-08 17:19:22] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-08 17:19:42] INFO [Thread-1 (process_request_thread)] "GET /api/benchmark/ HTTP/1.1" 200 5649
+[2025-07-08 17:20:40] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/database_operations.py changed, reloading.
+[2025-07-08 17:20:40] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-08 17:21:48] INFO [Thread-1 (process_request_thread)] "GET /api/benchmark/ HTTP/1.1" 200 5649
+[2025-07-08 17:22:38] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/database_operations.py changed, reloading.
+[2025-07-08 17:22:40] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-08 17:23:36] INFO [Thread-1 (process_request_thread)] "GET /api/benchmark/ HTTP/1.1" 200 5649
+[2025-07-08 17:24:42] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/database_operations.py changed, reloading.
+[2025-07-08 17:24:44] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-08 17:25:14] INFO [Thread-1 (process_request_thread)] "GET /api/benchmark/ HTTP/1.1" 200 5649
+[2025-07-08 17:27:32] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/database_operations.py changed, reloading.
+[2025-07-08 17:27:35] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-08 17:29:33] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-08 17:29:51] INFO [Thread-1 (process_request_thread)] "GET /api/benchmark/ HTTP/1.1" 200 5649
+[2025-07-08 17:34:31] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-08 17:34:32] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-08 17:34:46] INFO [Thread-1 (process_request_thread)] "GET /api/benchmark/ HTTP/1.1" 200 6128
+[2025-07-08 17:34:56] INFO [Thread-2 (process_request_thread)] "GET / HTTP/1.1" 200 11509
+[2025-07-08 17:35:23] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-08 17:35:25] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-08 17:36:13] INFO [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 200 11513
+[2025-07-08 18:08:21] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-08 18:09:10] INFO [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 200 11513
+[2025-07-08 18:12:05] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-08 18:12:09] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-08 18:12:15] INFO [Thread-1 (process_request_thread)] "GET /admin/app1/product/ HTTP/1.1" 200 30486
+[2025-07-08 18:12:16] INFO [Thread-1 (process_request_thread)] "GET /static/admin/fonts/Roboto-Light-webfont.woff HTTP/1.1" 200 85692
+[2025-07-08 18:12:16] INFO [Thread-2 (process_request_thread)] "GET /static/admin/fonts/Roboto-Bold-webfont.woff HTTP/1.1" 200 86184
+[2025-07-08 18:12:16] INFO [Thread-3 (process_request_thread)] "GET /static/admin/fonts/Roboto-Regular-webfont.woff HTTP/1.1" 200 85876
+[2025-07-08 18:12:24] ERROR [Thread-4 (process_request_thread)] Internal Server Error: /pure
+Traceback (most recent call last):
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/backs/others/test_dbs/app1/views.py", line 173, in pure_benchmark_view
+    response = el_client.search(
+               ^^^^^^^^^
+NameError: name 'el_client' is not defined. Did you mean: 'es_client'?
+[2025-07-08 18:12:24] ERROR [Thread-4 (process_request_thread)] "GET /pure HTTP/1.1" 500 73453
+[2025-07-08 18:12:38] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-08 18:12:39] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-08 18:12:41] ERROR [Thread-1 (process_request_thread)] Internal Server Error: /pure
+Traceback (most recent call last):
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/backs/others/test_dbs/app1/views.py", line 174, in pure_benchmark_view
+    index=self.index_name,
+          ^^^^
+NameError: name 'self' is not defined
+[2025-07-08 18:12:41] ERROR [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 500 73500
+[2025-07-08 18:12:53] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-08 18:12:54] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-08 18:13:01] ERROR [Thread-1 (process_request_thread)] Internal Server Error: /pure
+Traceback (most recent call last):
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/backs/others/test_dbs/app1/views.py", line 173, in pure_benchmark_view
+    response = es_client.search(
+               ^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/elasticsearch/client/utils.py", line 347, in _wrapped
+    return func(*args, params=params, headers=headers, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/elasticsearch/client/__init__.py", line 1821, in search
+    return self.transport.perform_request(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/elasticsearch/transport.py", line 466, in perform_request
+    raise e
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/elasticsearch/transport.py", line 427, in perform_request
+    status, headers_response, data = connection.perform_request(
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/elasticsearch/connection/http_urllib3.py", line 291, in perform_request
+    self._raise_error(response.status, raw_data)
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/elasticsearch/connection/base.py", line 328, in _raise_error
+    raise HTTP_EXCEPTIONS.get(status_code, TransportError)(
+elasticsearch.exceptions.RequestError: RequestError(400, 'search_phase_execution_exception', 'No mapping found for [timestamp] in order to sort on')
+[2025-07-08 18:13:01] ERROR [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 500 117737
+[2025-07-08 18:14:05] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/views.py changed, reloading.
+[2025-07-08 18:14:07] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-08 18:14:09] ERROR [Thread-1 (process_request_thread)] Internal Server Error: /pure
+Traceback (most recent call last):
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/backs/others/test_dbs/app1/views.py", line 173, in pure_benchmark_view
+    response = es_client.search(
+               ^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/elasticsearch/client/utils.py", line 347, in _wrapped
+    return func(*args, params=params, headers=headers, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/elasticsearch/client/__init__.py", line 1821, in search
+    return self.transport.perform_request(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/elasticsearch/transport.py", line 466, in perform_request
+    raise e
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/elasticsearch/transport.py", line 427, in perform_request
+    status, headers_response, data = connection.perform_request(
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/elasticsearch/connection/http_urllib3.py", line 291, in perform_request
+    self._raise_error(response.status, raw_data)
+  File "/home/akh/.virtualenvs/venv/lib/python3.12/site-packages/elasticsearch/connection/base.py", line 328, in _raise_error
+    raise HTTP_EXCEPTIONS.get(status_code, TransportError)(
+elasticsearch.exceptions.RequestError: RequestError(400, 'search_phase_execution_exception', 'Fielddata access on the _id field is disallowed, you can re-enable it by updating the dynamic cluster setting: indices.id_field_data.enabled')
+[2025-07-08 18:14:09] ERROR [Thread-1 (process_request_thread)] "GET /pure HTTP/1.1" 500 120797
+[2025-07-08 18:17:16] INFO [Thread-2 (process_request_thread)] "GET / HTTP/1.1" 200 11509
+[2025-07-08 18:17:47] INFO [MainThread] /mnt/c/backs/others/test_dbs/dbs_test/settings.py changed, reloading.
+[2025-07-08 18:17:49] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-08 18:18:03] INFO [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 200 10047
+[2025-07-08 18:18:21] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/database_operations.py changed, reloading.
+[2025-07-08 18:18:22] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-08 18:18:27] INFO [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 200 10047
+[2025-07-08 18:18:36] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/database_operations.py changed, reloading.
+[2025-07-08 18:18:37] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-08 18:18:39] INFO [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 200 10047
+[2025-07-08 18:19:00] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/database_operations.py changed, reloading.
+[2025-07-08 18:19:02] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-08 18:19:03] INFO [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 200 10047
+[2025-07-08 18:20:26] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/database_operations.py changed, reloading.
+[2025-07-08 18:20:29] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-08 18:20:34] INFO [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 200 10047
+[2025-07-08 18:21:49] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/database_operations.py changed, reloading.
+[2025-07-08 18:21:53] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-08 18:23:29] INFO [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 200 10047
+[2025-07-08 18:23:34] INFO [Thread-2 (process_request_thread)] "GET / HTTP/1.1" 200 10047
+[2025-07-08 18:24:06] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/database_operations.py changed, reloading.
+[2025-07-08 18:24:08] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-08 18:24:13] INFO [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 200 8990
+[2025-07-08 18:24:38] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/database_operations.py changed, reloading.
+[2025-07-08 18:24:39] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-08 18:24:45] INFO [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 200 10047
+[2025-07-08 18:26:11] INFO [MainThread] /mnt/c/backs/others/test_dbs/app1/database_operations.py changed, reloading.
+[2025-07-08 18:26:12] INFO [MainThread] Watching for file changes with StatReloader
+[2025-07-08 18:29:06] INFO [Thread-1 (process_request_thread)] "GET / HTTP/1.1" 200 10047

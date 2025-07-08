@@ -6,15 +6,17 @@
   <component name="ChangeListManager">
     <list default="true" id="857553d7-9172-413e-b1d9-bdc608daa565" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CLAUDE.md" beforeDir="false" afterPath="$PROJECT_DIR$/CLAUDE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app1/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/app1/admin.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app1/database_operations.py" beforeDir="false" afterPath="$PROJECT_DIR$/app1/database_operations.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app1/methods.py" beforeDir="false" afterPath="$PROJECT_DIR$/app1/methods.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app1/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/app1/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app1/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/app1/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app1/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/app1/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app1/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app1/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dbs_test/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/dbs_test/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logs/django.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/django.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logs/web.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/web.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/setup_tables.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup_tables.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,7 +113,15 @@
       <workItem from="1749893448545" duration="147000" />
       <workItem from="1751523710739" duration="10763000" />
       <workItem from="1751627671499" duration="2412000" />
-      <workItem from="1751639027301" duration="738000" />
+      <workItem from="1751639027301" duration="13966000" />
+      <workItem from="1751689291534" duration="2845000" />
+      <workItem from="1751693402795" duration="1072000" />
+      <workItem from="1751695339138" duration="19272000" />
+      <workItem from="1751740783352" duration="1543000" />
+      <workItem from="1751743420677" duration="2131000" />
+      <workItem from="1751780813370" duration="1138000" />
+      <workItem from="1751948809450" duration="17781000" />
+      <workItem from="1751988424341" duration="8653000" />
     </task>
     <servers />
   </component>

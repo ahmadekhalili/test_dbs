@@ -67,6 +67,24 @@ class ProductMongo(Document):
         }
 
 
+class ProductMongo2(Document):
+    """MongoDB model using MongoEngine with full-text search support"""
+    name = StringField(max_length=200, required=True)
+    category = StringField(max_length=100, required=True)
+    price = DecimalField(min_value=0, precision=2, required=True)
+    stock = IntField(min_value=0, required=True)
+    description = StringField(required=True)
+    rating = FloatField(min_value=0, max_value=5, required=True)
+
+    meta = {
+        'collection': settings.MONGODB['TABLE2'],
+        'indexes': [
+            'name',  # Single field index on category
+            'price',  # Single field index on price
+        ]
+    }
+
+
 @dataclass
 class ProductData:
     """Data class for product structure validation"""
@@ -329,6 +347,7 @@ def setup_mongodb():
 
         # Create indexes including full-text search
         ProductMongo.ensure_indexes()
+        ProductMongo2.ensure_indexes()
         print("✅ MongoDB indexes created for ProductMongo collection: products")
         print("   - Category index")
         print("   - Price index")

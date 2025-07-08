@@ -188,7 +188,9 @@ DATABASES = {
         'CONN_MAX_AGE': 600,  # Connection pooling
         'OPTIONS': {
             'connect_timeout': 10,
-        }
+        },
+        'TABLE': 'Product',
+        'TABLE2': 'Product2',
     }
 }
 # MongoDB Configuration
@@ -196,6 +198,7 @@ MONGODB = {
     'HOST': 'localhost',        # MongoDB host
     'PORT': 27016,             # MongoDB port
     'NAME': 'test_db',    # MongoDB database name
+    'TABLE2': 'products2', # collection name, used in setup_tables first
     #'USER': 'mongo_user',      # Optional: MongoDB username
     #'PASSWORD': 'mongo_pass',  # Optional: MongoDB password
 }
@@ -259,6 +262,6 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # after change restart manually!
-OPERATIONS_COUNT = {'write': 1000, 'read': 100, 'aggregate': 1000, 'full_text_search_simple': 100}   # do it in all dbs. example: do read for 100 records
-DATABASES_TO_TEST = {'Elastic': 'ElasticBenchmarkStrategy', 'Mongo': 'MongoBenchmarkStrategy', 'Postgres': 'PostgresBenchmarkStrategy'}
+OPERATIONS = {'read': {'field_name': 'category', 'query_count': 1}}   # do it in all dbs. example: do read for 100 records
+DATABASES_TO_TEST = {'Elastic': 'ElasticBenchmarkStrategy'}
 REFRESH = False          # clear database after each test or not

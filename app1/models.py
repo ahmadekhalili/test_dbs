@@ -3,7 +3,7 @@ from django.contrib.postgres.indexes import GinIndex
 from django.contrib.postgres.search import SearchVectorField
 
 
-class Product(models.Model):
+class Product(models.Model):  # db_table = 'products'
     """
     PostgreSQL model optimized for full-text search benchmarking
     Maintains exact same structure as MongoDB and Elasticsearch,.. for fair comparison
@@ -62,3 +62,16 @@ class Product(models.Model):
             'description': self.description,
             'rating': self.rating
         }
+
+
+class Product2(models.Model):
+    """
+    """
+    name = models.CharField(max_length=200, db_index=True, blank=True)
+    name2 = models.CharField(max_length=200, blank=True)
+    category = models.CharField(max_length=200, blank=True)
+    price = models.FloatField(blank=True, db_index=True)
+    price2 = models.FloatField(blank=True)
+    stock = models.IntegerField(blank=True)
+    description = models.TextField(blank=True)
+    rating = models.FloatField(blank=True)

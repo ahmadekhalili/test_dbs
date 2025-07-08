@@ -3,12 +3,14 @@ import time
 import random
 import logging
 from typing import Dict, List, Tuple, Any, Callable
-from django.db.models import Q
+from django.db.models import Q, Avg, Count
 from django.db import transaction
+from django.apps import apps
+from django.conf import settings
 from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
 from decimal import Decimal
 
-from .models import Product
+from .models import *
 
 logger = logging.getLogger('web')
 
@@ -17,6 +19,8 @@ original_level = es_logger.level
 es_logger.setLevel(logging.WARNING)
 logging.getLogger('pymongo').setLevel(logging.WARNING)
 
+postgres_table_name = settings.DATABASES['default']['TABLE']
+POSTGRES_MODEL = apps.get_model('app1', postgres_table_name)
 
 # separated here from methods.py because of circular imports from settings.py
 class BenchmarkStrategy(ABC):
@@ -29,7 +33,7 @@ class BenchmarkStrategy(ABC):
         pass
 
     @abstractmethod
-    def read(self) -> Tuple[float, str]:
+    def read(self, query_count, field_name=None) -> Tuple[float, str]:
         pass
 
     @abstractmethod
@@ -47,8 +51,28 @@ class BenchmarkStrategy(ABC):
         pass
 
 
+class FieldValue:
+    '''
+    field methods must named in structure: fieldname_value()
+    '''
+    def __init__(self, db: BenchmarkStrategy):
+        self.db = db
+
+    def category_value(self):
+        return "Electronics"
+
+    def name_value(self):
+        return f"Product {random.randint(0, self.db._get_max_records())}"
+
+    def get_field_value(self, field_name):
+        method = getattr(self, f"{field_name}_value")
+        return method()
+
+
 class PostgresBenchmarkStrategy(BenchmarkStrategy):
     """PostgreSQL implementation with full-text search using PostgreSQL's built-in capabilities"""
+    def _get_max_records(self):
+        return Product.objects.count()
 
     def write(self, data):
         logger.info(f'postgres write data: {len(data)} records like: {data[:2]}')
@@ -57,7 +81,7 @@ class PostgresBenchmarkStrategy(BenchmarkStrategy):
             with transaction.atomic():
                 products = []
                 for item in data:
-                    products.append(Product(
+                    products.append(POSTGRES_MODEL(
                         name=item['name'],
                         category=item['category'],
                         price=Decimal(str(item['price'])),
@@ -65,21 +89,26 @@ class PostgresBenchmarkStrategy(BenchmarkStrategy):
                         description=item['description'],
                         rating=item['rating']
                     ))
-                Product.objects.bulk_create(products)
+                POSTGRES_MODEL.objects.bulk_create(products)
             end_time = time.time()
             return end_time - start_time, 'Write'
         except Exception as e:
             logger.error(f"PostgreSQL write benchmark failed: {e}")
             raise
 
-    def read(self, query_count):
+    def read(self, query_count, field_name=None):
+        field_value = FieldValue(self)
         try:
             start_time = time.time()
             for _ in range(query_count):
-                if random.choice([True, False]):
-                    list(Product.objects.filter(category='Electronics'))
+                if not field_name:
+                    if random.choice([True, False]):
+                        list(POSTGRES_MODEL.objects.filter(category='Electronics'))
+                    else:
+                        list(POSTGRES_MODEL.objects.filter(price__gte=100, price__lte=500))
                 else:
-                    list(Product.objects.filter(price__gte=100, price__lte=500))
+                    query = {f"{field_name}": field_value.get_field_value(field_name)}
+                    list(POSTGRES_MODEL.objects.filter(**query))
             end_time = time.time()
             return end_time - start_time, 'Read'
         except Exception as e:
@@ -88,9 +117,9 @@ class PostgresBenchmarkStrategy(BenchmarkStrategy):
 
     def aggregate(self, data=None):
         try:
-            from django.db.models import Avg, Count
+            # returns like: {'category': 'Electronics', 'avg_price': 245.75, 'count': 12}
             start_time = time.time()
-            result = (Product.objects
+            result = (POSTGRES_MODEL.objects
                       .values('category')
                       .annotate(avg_price=Avg('price'), count=Count('id'))
                       .order_by('-avg_price'))
@@ -114,7 +143,7 @@ class PostgresBenchmarkStrategy(BenchmarkStrategy):
             for _ in range(query_count):
                 term = random.choice(search_terms)
                 # Basic full-text search - single word lookup
-                list(Product.objects.extra(
+                list(POSTGRES_MODEL.objects.extra(
                     where=["to_tsvector('english', name || ' ' || description) @@ plainto_tsquery('english', %s)"],
                     params=[term]
                 )[:20])
@@ -128,7 +157,7 @@ class PostgresBenchmarkStrategy(BenchmarkStrategy):
     def full_text_search_complex(self, query_count):
         """
         IDENTICAL TASK: Complex multi-word phrase search with filtering and ranking
-        Real-world scenario: Product search with price filter + relevance ranking
+        Real-world scenario: POSTGRES_MODEL search with price filter + relevance ranking
         PostgreSQL implementation using advanced text search features
         """
         try:
@@ -146,7 +175,7 @@ class PostgresBenchmarkStrategy(BenchmarkStrategy):
                 scenario = random.choice(search_scenarios)
                 
                 # Complex search: phrase + price filter + relevance ranking
-                results = list(Product.objects.annotate(
+                results = list(POSTGRES_MODEL.objects.annotate(
                     search=SearchVector('name', 'description', 'category'),
                     rank=SearchRank(SearchVector('name', 'description', 'category'), SearchQuery(scenario['phrase']))
                 ).filter(
@@ -164,6 +193,9 @@ class PostgresBenchmarkStrategy(BenchmarkStrategy):
 
 class MongoBenchmarkStrategy(BenchmarkStrategy):
     """MongoDB implementation with full-text search using MongoDB's text indexes"""
+    def _get_max_records(self):
+        # number of max_records
+        return self.client.count_documents({})
 
     def write(self, data):
         logger.info(f'mongo write data: {len(data)} records like: {data[:2]}')
@@ -176,14 +208,19 @@ class MongoBenchmarkStrategy(BenchmarkStrategy):
             logger.error(f"MongoDB write benchmark failed: {e}")
             raise
 
-    def read(self, query_count):
+    def read(self, query_count, field_name=None):
+        field_value = FieldValue(self)
         try:
             start_time = time.time()
             for _ in range(query_count):
-                if random.choice([True, False]):
-                    list(self.client.find({'category': 'Electronics'}))
+                if not field_name:
+                    if random.choice([True, False]):
+                        list(self.client.find({'category': 'Electronics'}))
+                    else:
+                        list(self.client.find({'price': {'$gte': 100, '$lte': 500}}))
                 else:
-                    list(self.client.find({'price': {'$gte': 100, '$lte': 500}}))
+                    query = {f"{field_name}": field_value.get_field_value(field_name)}
+                    list(self.client.find(query))
             end_time = time.time()
             return end_time - start_time, 'Read'
         except Exception as e:
@@ -272,7 +309,11 @@ class ElasticBenchmarkStrategy(BenchmarkStrategy):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.index_name = 'products'
+        self.index_name = settings.ELASTICSEARCH['INDEX_NAME']
+
+    def _get_max_records(self):
+        # number of max_records
+        return self.client.count(index=settings.ELASTICSEARCH['INDEX_NAME'])['count']
 
     def write(self, data):
         try:
@@ -296,15 +337,24 @@ class ElasticBenchmarkStrategy(BenchmarkStrategy):
             logger.error(f"Elasticsearch write benchmark failed: {e}")
             raise
 
-    def read(self, query_count):
+    def read(self, query_count, field_name=None):
+        field_value = FieldValue(self)
         try:
             start_time = time.time()
             for _ in range(query_count):
-                if random.choice([True, False]):
-                    self.client.search(index='products', body={'query': {'term': {'category.keyword': 'Electronics'}}})
+                if not field_name:
+                    if random.choice([True, False]):
+                        self.client.search(index=self.index_name, body={'query': {'term': {'category.keyword': 'Electronics'}}})
+                    else:
+                        self.client.search(index=self.index_name, body={'query': {'range': {'price': {'gte': 100, 'lte': 500}}}})
                 else:
-                    self.client.search(index='products', body={'query': {'range': {'price': {'gte': 100, 'lte': 500}}}})
+                    query = {f"{field_name}.keyword": field_value.get_field_value(field_name)}
+                    self.client.search(index=self.index_name,
+                                       body={'query': {'term': query}})
             end_time = time.time()
+            result = self.client.count(index=self.index_name,
+                               body={'query': {'term': query}})
+            logger.info(f"founded elastic records in read: {result['count']}")
             return end_time - start_time, 'Read'
         except Exception as e:
             logger.error(f"Elasticsearch read benchmark failed: {e}")

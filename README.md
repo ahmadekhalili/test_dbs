@@ -62,7 +62,7 @@ curl -X POST http://localhost:8000/api/benchmark/ \
 
 The application supports customizable benchmark parameters in `settings.py`:
 
-- **📈 OPERATIONS_COUNT**: Configure read/write/aggregate operation counts
+- **📈 OPERATIONS**: Configure read/write/aggregate operation counts
 - **🗄️ DATABASES_TO_TEST**: Select which databases to benchmark
 - **🔄 REFRESH**: Enable/disable database cleanup between tests
 

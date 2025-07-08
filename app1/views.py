@@ -6,12 +6,14 @@ from django.conf import settings
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
+from django.apps import apps
 from django.http import JsonResponse, HttpResponse
 from rest_framework.test import APIRequestFactory
 
 import time
 import random
 import logging
+import copy
 from decimal import Decimal
 
 from .models import Product
@@ -19,11 +21,17 @@ from .methods import BenchmarkOperationBuilder, DatabaseCleanup
 from .serializers import ProductSerializer, BenchmarkResultSerializer
 from .connections import get_mongo_client, get_els_client
 
-from setup_tables import ProductMongo
+from setup_tables import ProductMongo, ProductMongo2
 
 logger = logging.getLogger('web')
-mongo_collection = get_mongo_client()[settings.MONGODB['NAME']][ProductMongo._meta['collection']]
+mongo_db = get_mongo_client()[settings.MONGODB['NAME']]
+mongo_collection = mongo_db[ProductMongo._meta['collection']]
+mongo_collection2 = mongo_db[ProductMongo2._meta['collection']]
 es_client = get_els_client()
+
+postgres_table_name, postgres_table_name2 = settings.DATABASES['default']['TABLE'], settings.DATABASES['default']['TABLE2']
+POSTGRES_MODEL = apps.get_model('app1', postgres_table_name)
+POSTGRES_MODEL2 = apps.get_model('app1', postgres_table_name2)
 
 
 @method_decorator(csrf_exempt, name='dispatch')
@@ -53,11 +61,11 @@ class BenchmarkAPIView(APIView):
     def clear_data(self):
         """Clear all test data with error handling"""
         try:
-            Product.objects.all().delete()
-
+            POSTGRES_MODEL.objects.all().delete()
+            POSTGRES_MODEL2.objects.all().delete()
             # MongoDB - Drop collection
             mongo_collection.delete_many({})
-
+            mongo_collection2.delete_many({})
             # Elasticsearch - Delete index
             index_name = 'products'  # or whatever your index name is
             es_client.delete_by_query(
@@ -69,7 +77,7 @@ class BenchmarkAPIView(APIView):
                 }
             )
 
-            print("Product tables removed from all databases")
+            print("POSTGRES_MODEL tables removed from all databases")
         except Exception as e:
             logger.error(f"Failed to clear data: {e}")
 
@@ -89,7 +97,7 @@ class BenchmarkAPIView(APIView):
 
         # Build operations using SOLID principles
         operation_builder = BenchmarkOperationBuilder()
-        benchmark_operations = operation_builder.generate_argument_for_operations(settings.OPERATIONS_COUNT).build_operations()
+        benchmark_operations = operation_builder.generate_argument_for_operations(settings.OPERATIONS).build_operations()
         # Execute benchmarks
         results = []
         errors = []
@@ -150,9 +158,31 @@ def benchmark_results_view(request):
             'results': []
         })
 
+def get_query(model, db_operation):
+    # model: postgres model or mongo collection
+    # operation dict like: {'engine': 'mongo', 'type': 'price', 'field_name': 'price2'}
+    if db_operation['engine'] == 'mongo':
+        if db_operation['type'] == 'price':
+            return {db['field_name']: {'$gte': 100, '$lte': 500}}
+
+    elif db_operation['engine'] == 'postgres':
+        if db_operation['type'] == 'price':
+            return {'price__gte':100, 'price__lte':500}
 
 def pure_benchmark_view(request):
-    dbs_benchmarks = [{'database': 'Elastic', 'operation': 'Write', 'total_time': 1.5426812171936035}]
+    response = es_client.search(
+        index='products',
+        body={
+            "size": 10,
+            "query": {
+                "match_all": {}
+            },
+            "sort": [
+                {"_id": {"order": "desc"}}
+            ]
+        }
+    )
+    logger.info(f"response: {response}")
     return render(request, 'app1/benchmark_results.html', {'results': dbs_benchmarks})
 
 

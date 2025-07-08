@@ -59,7 +59,7 @@ curl -X POST http://localhost:8000/api/benchmark/ \
 
 ### Key Configuration
 - Database settings in `dbs_test/settings.py`
-- Test parameters: `OPERATIONS_COUNT`, `DATABASES_TO_TEST`, `REFRESH`
+- Test parameters: `OPERATIONS`, `DATABASES_TO_TEST`, `REFRESH`
 - Logging configuration for django.log, web.log, driver.log
 
 ### Troubleshooting
